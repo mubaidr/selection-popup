@@ -1,2 +1,3 @@
 # selection-popup
-An extension for Chromium based browsers which displays options (Search, Copy etc) on text selection.
+
+An extension to perform actions (Search, Copy etc) on text selection.
