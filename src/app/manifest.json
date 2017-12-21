@@ -9,16 +9,14 @@
   },
   "default_locale": "en",
   "background": {
-    "scripts": [
-      "scripts/chromereload.js",
-      "scripts/background.js"
-    ]
+    "scripts": ["scripts/chromereload.js", "scripts/background.js"]
   },
   "permissions": [
-    "tabs",
     "http://*/*",
     "https://*/*",
     "background",
+    "storage",
+    "tabs",
     "clipboardWrite"
   ],
   "options_ui": {
@@ -27,15 +25,10 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "js": [
-        "scripts/contentscript.js"
-      ],
-      "run_at": "document_end",
-      "all_frames": false
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["scripts/contentscript.js"],
+      "run_at": "document_start",
+      "all_frames": true
     }
   ]
 }
