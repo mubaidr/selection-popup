@@ -13,13 +13,16 @@ function hidePopup () {
 }
 
 // show popup
-function showPopup () {
+function showPopup (node) {
   hidePopup()
   if (!selectionText) return
 
   const container = document.createElement('div')
   const list = document.createElement('ul')
   container.className = className
+
+  console.log(node)
+
   container.appendChild(list)
   document.body.appendChild(container)
 
@@ -28,7 +31,7 @@ function showPopup () {
       options[key].items.forEach(item => {
         if (item.url) {
           list.innerHTML += `<li>
-          <a href=${item.url.replace('%s', selectionText)} target="_blank">
+          <a href='${item.url.replace('%s', selectionText)}' target='_blank'>
             ${item.name}
           </a>
         </li>`
@@ -44,12 +47,13 @@ function showPopup () {
 function addEventHandlers () {
   document.onmouseup = () => {
     const selection = window.getSelection()
+
     if (selection.type === 'Range') {
       selectionText = selection.focusNode.nodeValue
         .substring(selection.baseOffset, selection.focusOffset)
         .trim()
 
-      showPopup()
+      showPopup(selection.focusNode)
     } else {
       hidePopup()
     }
