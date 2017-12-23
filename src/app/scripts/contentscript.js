@@ -8,6 +8,16 @@ let position = {
   top: 0
 }
 
+// Get options
+chrome.runtime.sendMessage(
+  {
+    type: 'options'
+  },
+  obj => {
+    options = obj
+  }
+)
+
 // hide popup
 function hidePopup () {
   const popups = document.getElementsByClassName(className)
@@ -17,28 +27,39 @@ function hidePopup () {
   }
 }
 
+// handle click on menu item
 function clickHandler (e) {
-  hidePopup()
-
   const { isCommand, action } = e.target.dataset
-  if (isCommand) {
-    console.log(`Action: ${action}`)
+
+  if (isCommand === 'true') {
+    switch (action) {
+      case 'copy':
+      default:
+        document.execCommand('Copy')
+        break
+    }
   } else {
-    console.log(`Action: ${action}`)
+    chrome.runtime.sendMessage({
+      type: 'tab',
+      url: action
+    })
   }
+
+  hidePopup()
 }
 
 // show popup
 function showPopup () {
+  const { list } = options
   const container = document.createElement('div')
-  const list = document.createElement('ul')
+  const listContainer = document.createElement('ul')
   container.className = className
   container.style.left = position.left
   container.style.top = position.top
 
-  Object.keys(options).forEach(key => {
-    if (options[key].enabled) {
-      options[key].items.forEach(item => {
+  Object.keys(list).forEach(key => {
+    if (list[key].enabled) {
+      list[key].items.forEach(item => {
         const li = document.createElement('li')
         li.onclick = clickHandler
         li.innerText = item.name
@@ -47,15 +68,15 @@ function showPopup () {
           'data-action',
           item.isCommand ? item.command : item.url.replace('%s', selectionText)
         )
-        list.appendChild(li)
         li.onclick = clickHandler
+        listContainer.appendChild(li)
       })
     }
 
-    list.appendChild(document.createElement('hr'))
+    listContainer.appendChild(document.createElement('hr'))
   })
 
-  container.appendChild(list)
+  container.appendChild(listContainer)
   document.body.appendChild(container)
 }
 
@@ -65,7 +86,7 @@ function addEventHandlers () {
     if (e.target.dataset.action) return
 
     const selection = window.getSelection()
-    if (selection.type === 'Range') {
+    if (selection.type === 'Range' && selection.focusNode.nodeValue) {
       selectionText = selection.focusNode.nodeValue
         .substring(selection.baseOffset, selection.focusOffset)
         .trim()
@@ -84,18 +105,4 @@ function addEventHandlers () {
   }
 }
 
-// Get options from background script
-function getOptions () {
-  chrome.runtime.sendMessage(
-    {
-      type: 'options'
-    },
-    obj => {
-      options = obj
-    }
-  )
-}
-
-// Start process
-getOptions()
 addEventHandlers()

@@ -1,47 +1,46 @@
 // Oninstall handler
 chrome.runtime.onInstalled.addListener(details => {
   console.log(details)
-  chrome.storage.sync.clear()
 })
 
 // Default cofigurations
-const defaults = {
-  menu: {
-    enabled: true,
-    items: [
-      {
-        name: 'Copy',
-        enabled: true,
-        command: 'copy',
-        isCommand: true
-      }
-    ]
+let options = {
+  list: {
+    menu: {
+      enabled: true,
+      items: [
+        {
+          name: 'Copy',
+          enabled: true,
+          command: 'copy',
+          isCommand: true
+        }
+      ]
+    },
+    searchEngines: {
+      enabled: true,
+      items: [
+        {
+          name: 'Duck Duck Go',
+          url: 'https://duckduckgo.com/?q=%s'
+        },
+        {
+          name: 'Google',
+          url: 'http://google.com/search?q=%s'
+        },
+        {
+          name: 'Youtube',
+          url: 'https://www.youtube.com/results?search_query=%s'
+        },
+        {
+          name: 'Stackoverflow',
+          url: 'http://stackoverflow.com/search?q=%s'
+        }
+      ]
+    }
   },
-  searchEngines: {
-    enabled: true,
-    items: [
-      {
-        name: 'Duck Duck Go',
-        url: 'https://duckduckgo.com/?q=%s'
-      },
-      {
-        name: 'Google',
-        url: 'http://google.com/search?q=%s'
-      },
-      {
-        name: 'Youtube',
-        url: 'https://www.youtube.com/results?search_query=%s'
-      },
-      {
-        name: 'Stackoverflow',
-        url: 'http://stackoverflow.com/search?q=%s'
-      }
-    ]
-  }
+  openTabInBackground: true
 }
-
-// User configurations
-let options = defaults
 
 // Persistant options
 chrome.storage.sync.get('options', key => {
@@ -57,5 +56,10 @@ chrome.storage.sync.get('options', key => {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'options') {
     sendResponse(options)
+  } else if (request.type === 'tab') {
+    chrome.tabs.create({
+      url: request.url,
+      active: !options.openTabInBackground
+    })
   }
 })

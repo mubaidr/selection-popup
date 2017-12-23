@@ -3,8 +3,7 @@
   min-width: 140px;
   color: #eee !important;
   background-color: #555;
-  border: 1px solid #444;
-  box-shadow: 0 0 5px #000;
+  box-shadow: 0 0 5px #000, 0 0 1px 1px #000;
   z-index: 999999 !important;
   user-select: none;
   font-size: 14px;
@@ -21,7 +20,6 @@
   background-color: #555;
   color: #fff;
   padding: 2px 8px;
-  will-change: auto;
   list-style: none;
 }
 
@@ -30,21 +28,11 @@
 }
 
 .selection-popup-container ul li:active {
-  transform: scale(0.95);
-}
-
-.selection-popup-container ul li.seperator {
-  padding: 0;
-  border-bottom: 1px solid #444;
-}
-
-.selection-popup-container ul li:last-child:empty,
-.selection-popup-container ul li:first-child:empty {
-  display: none;
+  background-color: #666;
 }
 
 .selection-popup-container hr {
-  margin: 2px 0 !important;
+  margin: 0 !important;
 }
 
 .selection-popup-container hr:last-of-type {
