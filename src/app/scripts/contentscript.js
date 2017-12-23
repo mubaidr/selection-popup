@@ -2,6 +2,11 @@
 const className = 'selection-popup-container'
 let selectionText = ''
 let options = null
+// eslint-disable-next-line
+let position = {
+  left: 0,
+  top: 0
+}
 
 // hide popup
 function hidePopup () {
@@ -13,18 +18,16 @@ function hidePopup () {
 }
 
 // show popup
-function showPopup (node) {
-  hidePopup()
-  if (!selectionText) return
+function showPopup () {
+  if (!selectionText) {
+    return
+  }
 
   const container = document.createElement('div')
   const list = document.createElement('ul')
   container.className = className
-
-  console.log(node)
-
-  container.appendChild(list)
-  document.body.appendChild(container)
+  container.style.left = position.left
+  container.style.top = position.top
 
   Object.keys(options).forEach(key => {
     if (options[key].enabled) {
@@ -41,11 +44,14 @@ function showPopup (node) {
       })
     }
   })
+
+  container.appendChild(list)
+  document.body.appendChild(container)
 }
 
 // add mouseup event to check selection to document
 function addEventHandlers () {
-  document.onmouseup = () => {
+  document.onmouseup = (e) => {
     const selection = window.getSelection()
 
     if (selection.type === 'Range') {
@@ -53,16 +59,25 @@ function addEventHandlers () {
         .substring(selection.baseOffset, selection.focusOffset)
         .trim()
 
-      showPopup(selection.focusNode)
+      position.left = `${e.pageX  }px`
+      position.top = `${e.pageY + 14  }px`
+
+      showPopup()
     } else {
       hidePopup()
     }
+  }
+
+  document.onmousedown = (e) => {
+    console.log(e)
   }
 }
 
 // Get options from background script
 function getOptions () {
-  chrome.runtime.sendMessage({ type: 'options' }, obj => {
+  chrome.runtime.sendMessage({
+    type: 'options'
+  }, obj => {
     options = obj
     addEventHandlers()
   })
