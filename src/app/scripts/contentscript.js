@@ -17,12 +17,19 @@ function hidePopup () {
   }
 }
 
+function clickHandler (e) {
+  hidePopup()
+
+  const { isCommand, action } = e.target.dataset
+  if (isCommand) {
+    console.log(`Action: ${action}`)
+  } else {
+    console.log(`Action: ${action}`)
+  }
+}
+
 // show popup
 function showPopup () {
-  if (!selectionText) {
-    return
-  }
-
   const container = document.createElement('div')
   const list = document.createElement('ul')
   container.className = className
@@ -32,17 +39,20 @@ function showPopup () {
   Object.keys(options).forEach(key => {
     if (options[key].enabled) {
       options[key].items.forEach(item => {
-        if (item.url) {
-          list.innerHTML += `<li>
-          <a href='${item.url.replace('%s', selectionText)}' target='_blank'>
-            ${item.name}
-          </a>
-        </li>`
-        } else {
-          // TODO: menu items
-        }
+        const li = document.createElement('li')
+        li.onclick = clickHandler
+        li.innerText = item.name
+        li.setAttribute('data-is-command', !!item.isCommand)
+        li.setAttribute(
+          'data-action',
+          item.isCommand ? item.command : item.url.replace('%s', selectionText)
+        )
+        list.appendChild(li)
+        li.onclick = clickHandler
       })
     }
+
+    list.appendChild(document.createElement('hr'))
   })
 
   container.appendChild(list)
@@ -51,37 +61,41 @@ function showPopup () {
 
 // add mouseup event to check selection to document
 function addEventHandlers () {
-  document.onmouseup = (e) => {
-    const selection = window.getSelection()
+  document.onmouseup = e => {
+    if (e.target.dataset.action) return
 
+    const selection = window.getSelection()
     if (selection.type === 'Range') {
       selectionText = selection.focusNode.nodeValue
         .substring(selection.baseOffset, selection.focusOffset)
         .trim()
 
-      position.left = `${e.pageX  }px`
-      position.top = `${e.pageY + 14  }px`
+      if (!selectionText) {
+        hidePopup()
+        return
+      }
 
+      position.left = `${e.pageX}px`
+      position.top = `${e.pageY + 14}px`
       showPopup()
     } else {
       hidePopup()
     }
   }
-
-  document.onmousedown = (e) => {
-    console.log(e)
-  }
 }
 
 // Get options from background script
 function getOptions () {
-  chrome.runtime.sendMessage({
-    type: 'options'
-  }, obj => {
-    options = obj
-    addEventHandlers()
-  })
+  chrome.runtime.sendMessage(
+    {
+      type: 'options'
+    },
+    obj => {
+      options = obj
+    }
+  )
 }
 
 // Start process
 getOptions()
+addEventHandlers()

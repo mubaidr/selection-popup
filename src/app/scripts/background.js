@@ -1,6 +1,7 @@
 // Oninstall handler
 chrome.runtime.onInstalled.addListener(details => {
   console.log(details)
+  chrome.storage.sync.clear()
 })
 
 // Default cofigurations
@@ -9,9 +10,10 @@ const defaults = {
     enabled: true,
     items: [
       {
-        copy: {
-          enabled: true
-        }
+        name: 'Copy',
+        enabled: true,
+        command: 'copy',
+        isCommand: true
       }
     ]
   },
