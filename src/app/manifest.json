@@ -1,6 +1,6 @@
 {
   "name": "__MSG_appName__",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
@@ -11,14 +11,7 @@
   "background": {
     "scripts": ["scripts/chromereload.js", "scripts/background.js"]
   },
-  "permissions": [
-    "http://*/*",
-    "https://*/*",
-    "background",
-    "storage",
-    "tabs",
-    "clipboardWrite"
-  ],
+  "permissions": ["http://*/*", "https://*/*", "background", "storage", "tabs"],
   "options_ui": {
     "page": "options.html",
     "chrome_style": true
