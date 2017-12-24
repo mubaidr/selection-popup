@@ -32,6 +32,7 @@
 }
 
 .selection-popup-container hr {
+  background: #777 !important;
   margin: 0 !important;
 }
 

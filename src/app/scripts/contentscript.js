@@ -92,11 +92,11 @@ function addEventHandlers () {
         .substring(selection.baseOffset, selection.focusOffset)
         .trim()
 
-      position.left = `${e.pageX}px`
-      position.top = `${e.pageY + 14}px`
-      showPopup()
-    } else {
-      hidePopup()
+      if (selectionText) {
+        position.left = `${e.pageX}px`
+        position.top = `${e.pageY + 14}px`
+        showPopup()
+      }
     }
   }
 }

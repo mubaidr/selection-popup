@@ -27,6 +27,8 @@
   "globals": {
     "document": true,
     "window": true,
-    "chrome": true
-  }
+    "chrome": true,
+    "Vue": true
+  },
+  "plugins": ["html"]
 }

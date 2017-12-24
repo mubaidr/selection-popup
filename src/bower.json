@@ -2,6 +2,8 @@
   "name": "selection-popup",
   "private": true,
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "vue": "latest"
+  },
   "devDependencies": {}
 }
