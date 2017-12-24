@@ -85,16 +85,12 @@ function addEventHandlers () {
   document.onmouseup = e => {
     if (e.target.dataset.action) return
 
+    hidePopup()
     const selection = window.getSelection()
     if (selection.type === 'Range' && selection.focusNode.nodeValue) {
       selectionText = selection.focusNode.nodeValue
         .substring(selection.baseOffset, selection.focusOffset)
         .trim()
-
-      if (!selectionText) {
-        hidePopup()
-        return
-      }
 
       position.left = `${e.pageX}px`
       position.top = `${e.pageY + 14}px`
