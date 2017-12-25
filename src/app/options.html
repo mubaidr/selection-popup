@@ -9,29 +9,34 @@
     <!-- build:css styles/main.css -->
     <link href="styles/main.css" rel="stylesheet">
     <!-- endbuild -->
+
+    <script src="./bower_components/vue/dist/vue.js"></script>
   </head>
 
   <body>
     <h1>Selection Popup</h1>
 
-    <fieldset>
-      <legend>Menu</legend>
-    </fieldset>
+    <div id="app">
+      <fieldset>
+        <legend>Menu</legend>
+      </fieldset>
 
-    <fieldset>
-      <legend>Search</legend>
-    </fieldset>
+      <fieldset>
+        <legend>Search</legend>
+      </fieldset>
 
-    <fieldset>
-      <legend>General</legend>
-    </fieldset>
+      <fieldset>
+        <legend>General</legend>
+      </fieldset>
+      {{$data}}
+    </div>
+
     <!-- build:js scripts/options-vendor.js -->
     <!-- bower:js -->
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js scripts/options.js -->
-    <script src="./bower_components/vue/dist/vue.runtime.js"></script>
     <script src="scripts/options.js"></script>
     <!-- endbuild -->
   </body>

@@ -16,6 +16,9 @@
     "page": "options.html",
     "chrome_style": true
   },
+  "sandbox": {
+    "pages": ["options.html"]
+  },
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],

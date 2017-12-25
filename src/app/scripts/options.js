@@ -1,13 +1,22 @@
-let options = null
-
-console.log(Vue)
-
-// Get options
-chrome.runtime.sendMessage(
-  {
-    type: 'options'
+// eslint-disable-next-line
+const app = new Vue({
+  el: '#app',
+  data: {
+    options: null
   },
-  obj => {
-    options = obj
-  }
-)
+  created () {
+    // Get options
+    chrome.runtime.sendMessage(
+      {
+        type: 'options'
+      },
+      obj => {
+        console.log(this)
+        this.options = obj
+      }
+    )
+  },
+  mounted () {}
+})
+
+// TODO enable vue-loader in gulp
