@@ -1,3 +1,5 @@
+import './index.css'
+
 // class for styling
 const className = 'selection-popup-container'
 let selectionText = ''

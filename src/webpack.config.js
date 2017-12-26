@@ -7,7 +7,8 @@ const config = {
   context: `${__dirname}/src`,
   entry: {
     background: './background.js',
-    'options/index': './options/index.js'
+    'options/index': './options/index.js',
+    'contentscripts/index': './contentscripts/index.js'
   },
   output: {
     path: `${__dirname}/dist`,
@@ -61,7 +62,6 @@ const config = {
     }),
     new CopyWebpackPlugin([
       { from: 'assets/**.*', to: 'assets/**.*' },
-      { from: 'contentscripts', to: 'contentscripts' },
       { from: 'options/index.html', to: 'options/index.html' },
       { from: 'manifest.json', to: 'manifest.json' }
     ]),
