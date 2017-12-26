@@ -57,6 +57,8 @@ function showPopup () {
   container.style.left = position.left
   container.style.top = position.top
 
+  if (!(options.list.menu.enabled || options.list.searchEngines.enabled)) return
+
   Object.keys(list).forEach(key => {
     if (list[key].enabled) {
       list[key].items.forEach(item => {

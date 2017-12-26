@@ -1,20 +1,18 @@
 {
   "name": "selection-popup",
   "version": "1.0.0",
-  "description":
-    "An extension to perform actions (Search, Copy etc) on text selection.",
+  "description": "An extension to perform actions (Search, Copy etc) on text selection.",
   "author": "Muhammad Ubaid Raza <mubaidr@gmail.com>",
   "scripts": {
-    "build":
-      "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --hide-modules",
-    "build:dev":
-      "cross-env NODE_ENV=development webpack --config webpack.config.js --progress --hide-modules",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --hide-modules",
+    "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.js --progress --hide-modules",
     "build-zip": "node scripts/build-zip.js",
     "watch": "npm run build -- --watch",
     "watch:dev": "npm run build:dev -- --watch"
   },
   "dependencies": {
-    "vue": "^2.5.13"
+    "vue": "^2.5.13",
+    "vuedraggable": "^2.15.0"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
