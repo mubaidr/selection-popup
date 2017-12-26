@@ -61,7 +61,7 @@ const config = {
       filename: '[name].css'
     }),
     new CopyWebpackPlugin([
-      { from: 'assets/**.*', to: 'assets/**.*' },
+      { from: 'assets', to: 'assets' },
       { from: 'options/index.html', to: 'options/index.html' },
       { from: 'manifest.json', to: 'manifest.json' }
     ]),

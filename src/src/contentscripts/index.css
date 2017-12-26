@@ -1,39 +1,40 @@
 .selection-popup-container {
-  position: absolute;
-  min-width: 140px;
+  position: absolute !important;
+  min-width: 140px !important;
   color: #eee !important;
-  background-color: #555;
-  box-shadow: 0 0 5px #000, 0 0 1px 1px #000;
+  background-color: #555 !important;
+  box-shadow: 0 0 5px #000, 0 0 1px 1px #000 !important;
   z-index: 999999 !important;
-  user-select: none;
+  user-select: none !important;
 }
 
 .selection-popup-container ul {
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .selection-popup-container ul li {
-  margin: 0;
-  padding: 0;
-  background-color: #555;
-  color: #fff;
-  padding: 3px 8px;
-  list-style: none;
-  font-size: 14px;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #555 !important;
+  color: #fff !important;
+  padding: 3px 8px !important;
+  list-style: none !important;
+  font-size: 14px !important;
 }
 
 .selection-popup-container ul li:hover {
-  background-color: #444;
+  background-color: #444 !important;
 }
 
 .selection-popup-container ul li:active {
-  background-color: #666;
+  background-color: #666 !important;
 }
 
 .selection-popup-container hr {
   background: #777 !important;
   margin: 0 !important;
+  display: block !important;
 }
 
 .selection-popup-container hr:last-of-type {
