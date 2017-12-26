@@ -1,8 +1,4 @@
-node_modules
-temp
-.tmp
-dist
-.sass-cache
-app/bower_components
-test/bower_components
-package
+/node_modules
+/*.log
+/dist
+/dist-zip

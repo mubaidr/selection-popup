@@ -3,7 +3,7 @@
     [
       "env",
       {
-        "modules": true
+        "modules": false
       }
     ]
   ]

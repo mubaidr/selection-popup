@@ -1,37 +1,43 @@
 {
   "name": "selection-popup",
-  "private": true,
-  "engines": {
-    "node": ">=0.8.0"
+  "version": "1.0.0",
+  "description":
+    "An extension to perform actions (Search, Copy etc) on text selection.",
+  "author": "Muhammad Ubaid Raza <mubaidr@gmail.com>",
+  "scripts": {
+    "build":
+      "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --hide-modules",
+    "build:dev":
+      "cross-env NODE_ENV=development webpack --config webpack.config.js --progress --hide-modules",
+    "build-zip": "node scripts/build-zip.js",
+    "watch": "npm run build -- --watch",
+    "watch:dev": "npm run build:dev -- --watch"
+  },
+  "dependencies": {
+    "vue": "^2.5.13"
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
-    "del": "^3.0.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "copy-webpack-plugin": "^4.3.1",
+    "cross-env": "^5.1.3",
+    "css-loader": "^0.28.7",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-html": "^4.0.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "eslint": "^4.13.1",
-    "gulp-babel": "^7.0.0",
-    "gulp-cache": "^1.0.1",
-    "gulp-chrome-manifest": "0.0.13",
-    "gulp-clean-css": "^3.9.0",
-    "gulp-eslint": "^4.0.0",
-    "gulp-htmlmin": "^3.0.0",
-    "gulp-if": "^2.0.2",
-    "gulp-imagemin": "^4.0.0",
-    "gulp-livereload": "^3.8.1",
-    "gulp-load-plugins": "^1.5.0",
-    "gulp-size": "^2.1.0",
-    "gulp-sourcemaps": "^2.6.2",
-    "gulp-useref": "^3.1.3",
-    "gulp-zip": "^4.0.0",
-    "gulp": "^3.9.1",
-    "main-bower-files": "^2.13.1",
-    "run-sequence": "^2.2.0",
-    "uglify-js": "^3.2.2",
-    "wiredep": "^4.0.0"
+    "eslint": "^4.14.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.6",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6",
+    "vue-loader": "^13.6.1",
+    "vue-template-compiler": "^2.5.13",
+    "webpack": "^3.10.0",
+    "webpack-shell-plugin": "^0.5.0",
+    "zip-folder": "^1.0.0"
   }
 }
