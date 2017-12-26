@@ -1,8 +1,3 @@
-// Oninstall handler
-chrome.runtime.onInstalled.addListener(details => {
-  console.log(details)
-})
-
 // Default cofigurations
 let options = {
   list: {
@@ -42,13 +37,18 @@ let options = {
   openTabInBackground: true
 }
 
+// Oninstall handler
+chrome.runtime.onInstalled.addListener(details => {
+  if (details.reason === 'install') {
+    chrome.storage.sync.set({ options })
+  }
+})
+
 // Persistant options
 chrome.storage.sync.get('options', key => {
   if (key.options && key.options.searchEngines && key.options.menu) {
     // eslint-disable-next-line
     options = key.options
-  } else {
-    chrome.storage.sync.set({ options })
   }
 })
 
