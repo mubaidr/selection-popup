@@ -2,16 +2,26 @@
   <div>
     <template v-if="options">
       <div class="control">
-        <input type="checkbox" v-model="options.list.menu.enabled"> Enable Copy Command
+        <input type="checkbox" v-model="options.list.menu.enabled"> Enable Commands
       </div>
+      <fieldset v-if="options.list.menu.enabled">
+        <legend>Commands</legend>
+        <p>Change the order of commands. <br/>Go to web address command is only visible when selected address contains a valid url.</p>
+        <draggable v-model="options.list.menu.items" :options="{draggable:'.item'}" handle="handle">
+          <div v-for="item in options.list.menu.items" :key="item.command" class="item">
+            <div class="handle" title="Drag to Sort"> :::: </div>
+            {{item.name}}
+            <div class="group">
+              <input type="checkbox" v-model="item.enabled"> Enabled
+            </div>
+          </div>
+        </draggable>
+      </fieldset>
       <div class="control">
         <input type="checkbox" v-model="options.list.searchEngines.enabled"> Enable Search Engines
       </div>
       <fieldset v-if="options.list.searchEngines.enabled">
         <legend>Search Engines</legend>
-        <div class="control">
-          <input type="checkbox" v-model="options.openTabInBackground"> Open Search Tabs In Background
-        </div>
         <p>
           Add search engines and change the order. <br/>
           Use <strong>%s</strong> in the search url to represent <strong>selected text.</strong>
@@ -27,6 +37,9 @@
         <br/>
         <button @click="addItem">Add Search Engine</button>
       </fieldset>
+      <div class="control">
+        <input type="checkbox" v-model="options.openTabInBackground"> Open Tabs In Background
+      </div>
     </template>
   </div>
 </template>
@@ -77,12 +90,20 @@
 </script>
 
 <style lang="scss" scoped>
+  fieldset {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
   .control {
     margin: 15px 0;
   }
 
   .item {
     margin: 10px 0;
+  }
+
+  .item .group {
+    float: right;
   }
 
   .handle {

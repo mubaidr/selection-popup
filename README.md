@@ -1,3 +1,3 @@
-# selection-popup
+# Selection Popup
 
-An extension to perform actions (Search, Copy etc) on text selection.
+Perform customizable actions (Search, Copy etc) on selected text.

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "manifest_version": 2,
   "description":
-    "An extension to perform actions (Search, Copy etc) on text selection.",
+    "Perform customizable actions (Search, Copy etc) on selected text.",
   "icons": {
     "16": "assets/icons/icon_48.png",
     "128": "assets/icons/icon_128.png"

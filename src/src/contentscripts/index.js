@@ -4,21 +4,6 @@ import './index.css'
 const className = 'selection-popup-container'
 let selectionText = ''
 let options = null
-// eslint-disable-next-line
-let position = {
-  left: 0,
-  top: 0
-}
-
-// Get options
-chrome.runtime.sendMessage(
-  {
-    type: 'options'
-  },
-  obj => {
-    options = obj
-  }
-)
 
 // hide popup
 function hidePopup () {
@@ -35,6 +20,12 @@ function clickHandler (e) {
 
   if (isCommand === 'true') {
     switch (action) {
+      case 'gtwa':
+        chrome.runtime.sendMessage({
+          type: 'tab',
+          url: selectionText
+        })
+        break
       case 'copy':
       default:
         document.execCommand('Copy')
@@ -50,8 +41,15 @@ function clickHandler (e) {
   hidePopup()
 }
 
+// check if selected text is a url
+function validURL () {
+  // eslint-disable-next-line
+  const regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+  return regexp.test(selectionText)
+}
+
 // show popup
-function showPopup () {
+function showPopup (position) {
   const { list } = options
   const container = document.createElement('div')
   const listContainer = document.createElement('ul')
@@ -59,13 +57,15 @@ function showPopup () {
   container.style.left = position.left
   container.style.top = position.top
 
-  if (!(options.list.menu.enabled || options.list.searchEngines.enabled)) return
+  if (!(list.menu.enabled || list.searchEngines.enabled)) return
 
   Object.keys(list).forEach(key => {
     if (list[key].enabled) {
       list[key].items.forEach(item => {
+        if (item.isCommand && !item.enabled) return
+        if (item.isCommand && item.command === 'gtwa' && !validURL()) return
+
         const li = document.createElement('li')
-        li.onclick = clickHandler
         li.innerText = item.name
         li.setAttribute('data-is-command', !!item.isCommand)
         li.setAttribute(
@@ -85,7 +85,14 @@ function showPopup () {
 }
 
 // add mouseup event to check selection to document
-function addEventHandlers () {
+function setup () {
+  // Get options
+  chrome.storage.sync.get('options', key => {
+    // eslint-disable-next-line
+    options = key.options
+  })
+
+  // add text selection event
   document.onmouseup = e => {
     if (e.target.dataset.action) return
 
@@ -97,12 +104,13 @@ function addEventHandlers () {
         .trim()
 
       if (selectionText) {
-        position.left = `${e.pageX}px`
-        position.top = `${e.pageY + 14}px`
-        showPopup()
+        showPopup({
+          left: `${e.pageX}px`,
+          top: `${e.pageY + 14}px`
+        })
       }
     }
   }
 }
 
-addEventHandlers()
+setup()

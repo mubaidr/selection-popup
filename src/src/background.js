@@ -9,6 +9,12 @@ let options = {
           enabled: true,
           command: 'copy',
           isCommand: true
+        },
+        {
+          name: 'Go to Web Address',
+          enabled: true,
+          command: 'gtwa',
+          isCommand: true
         }
       ]
     },
@@ -53,10 +59,8 @@ chrome.storage.sync.get('options', key => {
 })
 
 // Share settings with content script
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === 'options') {
-    sendResponse(options)
-  } else if (request.type === 'tab') {
+chrome.runtime.onMessage.addListener(request => {
+  if (request.type === 'tab') {
     chrome.tabs.create({
       url: request.url,
       active: !options.openTabInBackground
