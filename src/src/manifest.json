@@ -1,6 +1,6 @@
 {
   "name": "Selection Popup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "manifest_version": 2,
   "description":
     "Perform customizable actions (Search, Copy etc) on selected text.",
@@ -21,7 +21,7 @@
       "matches": ["http://*/*", "https://*/*"],
       "js": ["./contentscripts/index.js"],
       "css": ["./contentscripts/index.css"],
-      "run_at": "document_start",
+      "run_at": "document_end",
       "all_frames": true
     }
   ]

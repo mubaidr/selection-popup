@@ -38,6 +38,8 @@
   display: block !important;
 }
 
+.selection-popup-container hr:first-child,
+.selection-popup-container hr:last-child,
 .selection-popup-container hr:last-of-type {
   display: none !important;
 }
