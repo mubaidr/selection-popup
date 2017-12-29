@@ -11,7 +11,7 @@
           Use <strong>%s</strong> in the search url to represent <strong>selected text.</strong>
         </p>
         <draggable v-model="options.list.searchEngines.items" :options="{draggable:'.item'}" handle=".my-handle">
-          <div v-for="(item, index) in options.list.searchEngines.items" :key="item.url" class="item">
+          <div v-for="(item, index) in options.list.searchEngines.items" :key="index" track-by="$index" class="item">
             <div class="my-handle" title="Drag to Sort"> :::: </div>
             <input type="text" v-model="item.name" class="name" placeholder="Name" title="Name"/>
             <input type="text" v-model="item.url" class="url" placeholder="URL" title="URL"/>
@@ -28,7 +28,7 @@
         <legend>Commands</legend>
         <p>Change the order of commands. <br/>Go to web address command is only visible when selected address contains a valid url.</p>
         <draggable v-model="options.list.menu.items" :options="{draggable:'.item'}" :handle="'.my-handle'">
-          <div v-for="item in options.list.menu.items" :key="item.command" class="item">
+          <div v-for="(item, index) in options.list.menu.items" :key="index" track-by="$index" class="item">
             <div class="my-handle" title="Drag to Sort"> :::: </div>
             {{item.name}}
             <div class="group">

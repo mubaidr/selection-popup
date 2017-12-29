@@ -1,14 +1,11 @@
 {
   "name": "selection-popup",
   "version": "1.5.1",
-  "description":
-    "Perform customizable actions (Search, Copy etc) on selected text.",
+  "description": "Perform customizable actions (Search, Copy etc) on selected text.",
   "author": "Muhammad Ubaid Raza <mubaidr@gmail.com>",
   "scripts": {
-    "build":
-      "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --hide-modules",
-    "build:dev":
-      "cross-env NODE_ENV=development webpack --config webpack.config.js --progress --hide-modules",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --hide-modules",
+    "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.js --progress --hide-modules",
     "build-zip": "node scripts/build-zip.js",
     "watch": "npm run build -- --watch",
     "watch:dev": "npm run build:dev -- --watch"
