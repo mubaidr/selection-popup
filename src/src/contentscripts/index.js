@@ -54,14 +54,13 @@ function showPopup (position) {
   const container = document.createElement('div')
   const listContainer = document.createElement('ul')
   const defaultEngine = list.searchEngines.items.length === 1
-
-  container.className = className
-  container.style.left = position.left
-  container.style.top = position.top
+  const propList = defaultEngine
+    ? ['searchEngines', 'menu']
+    : ['menu', 'searchEngines']
 
   if (!(list.menu.enabled || list.searchEngines.enabled)) return
 
-  ;['searchEngines', 'menu'].forEach(key => {
+  propList.forEach(key => {
     if (list[key].enabled) {
       list[key].items.forEach((item, index) => {
         if (item.isCommand && !item.enabled) return
@@ -82,7 +81,9 @@ function showPopup (position) {
   })
 
   listContainer.className = defaultEngine ? 'single-liner' : ''
-
+  container.className = className
+  container.style.left = position.left
+  container.style.top = position.top
   container.appendChild(listContainer)
   document.body.appendChild(container)
 }

@@ -10,9 +10,9 @@
           Add search engines and change the order. <br/>
           Use <strong>%s</strong> in the search url to represent <strong>selected text.</strong>
         </p>
-        <draggable v-model="options.list.searchEngines.items" :options="{draggable:'.item'}" handle="handle">
+        <draggable v-model="options.list.searchEngines.items" :options="{draggable:'.item'}" handle=".my-handle">
           <div v-for="(item, index) in options.list.searchEngines.items" :key="item.url" class="item">
-            <div class="handle" title="Drag to Sort"> :::: </div>
+            <div class="my-handle" title="Drag to Sort"> :::: </div>
             <input type="text" v-model="item.name" class="name" placeholder="Name" title="Name"/>
             <input type="text" v-model="item.url" class="url" placeholder="URL" title="URL"/>
             <div class="remove" title="Remove Search Engine" @click="removeItem(index)"> x </div>
@@ -27,9 +27,9 @@
       <fieldset v-if="options.list.menu.enabled">
         <legend>Commands</legend>
         <p>Change the order of commands. <br/>Go to web address command is only visible when selected address contains a valid url.</p>
-        <draggable v-model="options.list.menu.items" :options="{draggable:'.item'}" handle="handle">
+        <draggable v-model="options.list.menu.items" :options="{draggable:'.item'}" :handle="'.my-handle'">
           <div v-for="item in options.list.menu.items" :key="item.command" class="item">
-            <div class="handle" title="Drag to Sort"> :::: </div>
+            <div class="my-handle" title="Drag to Sort"> :::: </div>
             {{item.name}}
             <div class="group">
               <input type="checkbox" v-model="item.enabled"> Enabled
@@ -53,13 +53,15 @@
     },
     data () {
       return {
-        options: null
+        options: null,
+        _timer: null
       }
     },
     watch: {
       options: {
         handler () {
-          this.setOptions()
+          window.clearTimeout(this._timer)
+          this._timer = window.setTimeout(this.setOptions, 250)
         },
         deep: true
       }
@@ -106,10 +108,12 @@
     float: right;
   }
 
-  .handle {
+  .my-handle {
     width: 5%;
     padding: 5px 0;
     display: inline-block;
+    cursor: move;
+    cursor: -webkit-grabbing;
   }
 
   .name {
@@ -127,5 +131,6 @@
     width: 5%;
     display: inline-block;
     text-align: center;
+    cursor: pointer;
   }
 </style>
