@@ -1,45 +1,49 @@
 .selection-popup-container {
-  position: absolute !important;
-  min-width: 140px !important;
-  color: #eee !important;
-  background-color: #555 !important;
-  box-shadow: 0 0 5px #000, 0 0 1px 1px #000 !important;
-  z-index: 999999 !important;
-  user-select: none !important;
+  position: absolute;
+  width: 140px;
+  color: #eee;
+  background-color: #555;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5), 0 0 1px 1px #000;
+  z-index: 999999;
+  user-select: none;
 }
 
 .selection-popup-container ul {
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
 }
 
 .selection-popup-container ul li {
-  margin: 0 !important;
-  padding: 0 !important;
-  background-color: #555 !important;
-  color: #fff !important;
-  padding: 4px 8px !important;
-  list-style: none !important;
-  font-size: 14px !important;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+  margin: 0;
+  padding: 0;
+  background-color: #555;
+  color: #fff;
+  padding: 5px 10px;
+  list-style: none;
+  font-size: 14px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-overflow: ellipsis;
 }
 
 .selection-popup-container ul li:hover {
-  background-color: #444 !important;
+  background-color: #444;
 }
 
 .selection-popup-container ul li:active {
-  background-color: #666 !important;
+  background-color: #666;
 }
 
-.selection-popup-container hr {
-  border-color: #777 !important;
-  margin: 0 !important;
-  display: block !important;
+.selection-popup-container ul.single-liner li:nth-of-type(1),
+.selection-popup-container ul.single-liner li:nth-of-type(2) {
+  display: inline-block;
+  width: calc(50% - 21px);
 }
 
-.selection-popup-container hr:first-child,
-.selection-popup-container hr:last-child,
-.selection-popup-container hr:last-of-type {
-  display: none !important;
+.selection-popup-container ul.single-liner li:nth-of-type(1) {
+  border-right: 1px solid #666;
+}
+
+.selection-popup-container ul.single-liner li:nth-of-type(3),
+.selection-popup-container ul li.first-item:nth-of-type(2) {
+  border-top: 1px solid #666;
 }

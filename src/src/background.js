@@ -1,23 +1,6 @@
 // Default cofigurations
 let options = {
   list: {
-    menu: {
-      enabled: true,
-      items: [
-        {
-          name: 'Copy',
-          enabled: true,
-          command: 'copy',
-          isCommand: true
-        },
-        {
-          name: 'Go to Web Address',
-          enabled: true,
-          command: 'gtwa',
-          isCommand: true
-        }
-      ]
-    },
     searchEngines: {
       enabled: true,
       items: [
@@ -36,6 +19,23 @@ let options = {
         {
           name: 'Stackoverflow',
           url: 'http://stackoverflow.com/search?q=%s'
+        }
+      ]
+    },
+    menu: {
+      enabled: true,
+      items: [
+        {
+          name: 'Copy',
+          enabled: true,
+          command: 'copy',
+          isCommand: true
+        },
+        {
+          name: 'Go to Web Address',
+          enabled: true,
+          command: 'gtwa',
+          isCommand: true
         }
       ]
     }

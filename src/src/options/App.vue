@@ -2,22 +2,6 @@
   <div>
     <template v-if="options">
       <div class="control">
-        <input type="checkbox" v-model="options.list.menu.enabled"> Enable Commands
-      </div>
-      <fieldset v-if="options.list.menu.enabled">
-        <legend>Commands</legend>
-        <p>Change the order of commands. <br/>Go to web address command is only visible when selected address contains a valid url.</p>
-        <draggable v-model="options.list.menu.items" :options="{draggable:'.item'}" handle="handle">
-          <div v-for="item in options.list.menu.items" :key="item.command" class="item">
-            <div class="handle" title="Drag to Sort"> :::: </div>
-            {{item.name}}
-            <div class="group">
-              <input type="checkbox" v-model="item.enabled"> Enabled
-            </div>
-          </div>
-        </draggable>
-      </fieldset>
-      <div class="control">
         <input type="checkbox" v-model="options.list.searchEngines.enabled"> Enable Search Engines
       </div>
       <fieldset v-if="options.list.searchEngines.enabled">
@@ -36,6 +20,22 @@
         </draggable>
         <br/>
         <button @click="addItem">Add Search Engine</button>
+      </fieldset>
+      <div class="control">
+        <input type="checkbox" v-model="options.list.menu.enabled"> Enable Commands
+      </div>
+      <fieldset v-if="options.list.menu.enabled">
+        <legend>Commands</legend>
+        <p>Change the order of commands. <br/>Go to web address command is only visible when selected address contains a valid url.</p>
+        <draggable v-model="options.list.menu.items" :options="{draggable:'.item'}" handle="handle">
+          <div v-for="item in options.list.menu.items" :key="item.command" class="item">
+            <div class="handle" title="Drag to Sort"> :::: </div>
+            {{item.name}}
+            <div class="group">
+              <input type="checkbox" v-model="item.enabled"> Enabled
+            </div>
+          </div>
+        </draggable>
       </fieldset>
       <div class="control">
         <input type="checkbox" v-model="options.openTabInBackground"> Open Tabs In Background

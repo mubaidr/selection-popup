@@ -53,20 +53,23 @@ function showPopup (position) {
   const { list } = options
   const container = document.createElement('div')
   const listContainer = document.createElement('ul')
+  const defaultEngine = list.searchEngines.items.length === 1
+
   container.className = className
   container.style.left = position.left
   container.style.top = position.top
 
   if (!(list.menu.enabled || list.searchEngines.enabled)) return
 
-  Object.keys(list).forEach(key => {
+  ;['searchEngines', 'menu'].forEach(key => {
     if (list[key].enabled) {
-      list[key].items.forEach(item => {
+      list[key].items.forEach((item, index) => {
         if (item.isCommand && !item.enabled) return
         if (item.isCommand && item.command === 'gtwa' && !validURL()) return
 
         const li = document.createElement('li')
-        li.innerText = item.name
+        li.className = index === 0 ? 'first-item' : ''
+        li.innerText = defaultEngine && !item.isCommand ? 'Search' : item.name
         li.setAttribute('data-is-command', !!item.isCommand)
         li.setAttribute(
           'data-action',
@@ -76,9 +79,9 @@ function showPopup (position) {
         listContainer.appendChild(li)
       })
     }
-
-    listContainer.appendChild(document.createElement('hr'))
   })
+
+  listContainer.className = defaultEngine ? 'single-liner' : ''
 
   container.appendChild(listContainer)
   document.body.appendChild(container)
