@@ -7,15 +7,21 @@ let options = null
 
 // hide popup
 function hidePopup () {
-  const popups = document.getElementsByClassName(className)
-  for (let i = 0; i < popups.length; i += 1) {
-    const popup = popups[i]
-    popup.parentNode.removeChild(popup)
-  }
+  document.getElementsByClassName(className)[0].style.display = 'none'
+}
+
+// hide popup
+function showPopup (position) {
+  const popup = document.getElementsByClassName(className)[0]
+  popup.style.left = position.left
+  popup.style.top = position.top
+  popup.style.display = 'block'
 }
 
 // handle click on menu item
 function clickHandler (e) {
+  hidePopup()
+
   const { isCommand, action } = e.target.dataset
 
   if (isCommand === 'true') {
@@ -23,7 +29,8 @@ function clickHandler (e) {
       case 'gtwa':
         chrome.runtime.sendMessage({
           type: 'tab',
-          url: selectionText
+          url: selectionText,
+          active: !options.openTabInBackground
         })
         break
       case 'copy':
@@ -34,12 +41,10 @@ function clickHandler (e) {
   } else {
     chrome.runtime.sendMessage({
       type: 'tab',
-      url: action,
-      openTabInBackground: options.openTabInBackground
+      url: action.replace('%s', selectionText),
+      active: !options.openTabInBackground
     })
   }
-
-  hidePopup()
 }
 
 // check if selected text is a url
@@ -50,7 +55,7 @@ function validURL () {
 }
 
 // show popup
-function showPopup (position) {
+function addPopup () {
   const { list } = options
   const container = document.createElement('div')
   const listContainer = document.createElement('ul')
@@ -71,10 +76,7 @@ function showPopup (position) {
         li.className = index === 0 ? 'first-item' : ''
         li.innerText = defaultEngine && !item.isCommand ? 'Search' : item.name
         li.setAttribute('data-is-command', !!item.isCommand)
-        li.setAttribute(
-          'data-action',
-          item.isCommand ? item.command : item.url.replace('%s', selectionText)
-        )
+        li.setAttribute('data-action', item.isCommand ? item.command : item.url)
         li.onclick = clickHandler
         listContainer.appendChild(li)
       })
@@ -83,8 +85,7 @@ function showPopup (position) {
 
   listContainer.className = defaultEngine ? 'single-liner' : ''
   container.className = className
-  container.style.left = position.left
-  container.style.top = position.top
+  container.style.display = 'none'
   container.appendChild(listContainer)
   document.body.appendChild(container)
 }
@@ -95,6 +96,9 @@ function setup () {
   chrome.storage.sync.get('options', key => {
     // eslint-disable-next-line
     options = key.options
+
+    // add popup markup
+    addPopup()
 
     // inject custom css
     if (options.enableAdvanceSettings && options.style.trim().length > 0) {
@@ -107,9 +111,8 @@ function setup () {
 
   // add text selection event
   document.onmouseup = e => {
-    if (e.target.dataset.action) return
-
     hidePopup()
+
     const selection = window.getSelection()
     if (selection.type === 'Range' && selection.focusNode.nodeValue) {
       selectionText = selection.focusNode.nodeValue

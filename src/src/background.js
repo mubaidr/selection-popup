@@ -70,6 +70,7 @@ chrome.runtime.onInstalled.addListener(details => {
     // merge new options
     chrome.storage.sync.get('options', key => {
       options = Object.assign({}, options, key.options)
+
       // save updated options
       chrome.storage.sync.set({ options })
     })
@@ -81,7 +82,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
   if (request.type === 'tab') {
     chrome.tabs.create({
       url: request.url,
-      active: request.openTabInBackground
+      active: request.active
     })
   } else if (request.type === 'style') {
     chrome.tabs.insertCSS(sender.tab.id, {

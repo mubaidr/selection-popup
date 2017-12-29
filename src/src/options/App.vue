@@ -128,7 +128,7 @@
   }
 
   .name {
-    width: 25%;
+    width: 23%;
     display: inline-block;
   }
 
