@@ -1,7 +1,7 @@
 import './index.css'
 
 // class for styling
-const className = 'selection-popup-container'
+const className = '__selection-popup-container__'
 let selectionText = ''
 let options = null
 
@@ -94,6 +94,14 @@ function setup () {
   chrome.storage.sync.get('options', key => {
     // eslint-disable-next-line
     options = key.options
+
+    // inject custom css
+    if (options.enableAdvanceSettings && options.style.trim().length > 0) {
+      chrome.runtime.sendMessage({
+        type: 'style',
+        style: options.style
+      })
+    }
   })
 
   // add text selection event

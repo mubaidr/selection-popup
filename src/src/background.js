@@ -40,13 +40,32 @@ let options = {
       ]
     }
   },
-  openTabInBackground: true
+  openTabInBackground: true,
+  enableAdvanceSettings: false,
+  style: `.__selection-popup-container__ {
+      /* main container*/
+      /* you should only need to customize background-color*/
+    }
+
+    .__selection-popup-container__ ul li{
+      /* each item in popup menu*/
+    }
+
+    .__selection-popup-container__ ul li:hover {
+      /* item hover state */
+    }
+
+    .__selection-popup-container__ ul li:active {
+      /* item active state */
+    }
+
+    /* for other possibilities or live testing you can inspect the popup */`
 }
 
 // Oninstall handler
 chrome.runtime.onInstalled.addListener(details => {
   if (details.reason === 'install') {
-    chrome.storage.sync.set({ options })
+    chrome.storage.sync.set({ options }, chrome.runtime.openOptionsPage)
   }
 })
 
@@ -59,11 +78,16 @@ chrome.storage.sync.get('options', key => {
 })
 
 // Share settings with content script
-chrome.runtime.onMessage.addListener(request => {
+chrome.runtime.onMessage.addListener((request, sender) => {
   if (request.type === 'tab') {
     chrome.tabs.create({
       url: request.url,
       active: !options.openTabInBackground
+    })
+  } else if (request.type === 'style') {
+    chrome.tabs.insertCSS(sender.tab.id, {
+      code: request.style,
+      allFrames: true
     })
   }
 })

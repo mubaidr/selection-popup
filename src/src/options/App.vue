@@ -1,6 +1,9 @@
 <template>
   <div>
     <template v-if="options">
+      <h1>Welcome</h1>
+      <p> You can control the functionality here. </p>
+      <p> Please note that you will need to <strong>reload</strong> current tabs to apply new changes. </p>
       <div class="control">
         <input type="checkbox" v-model="options.list.searchEngines.enabled"> Enable Search Engines
       </div>
@@ -40,6 +43,14 @@
       <div class="control">
         <input type="checkbox" v-model="options.openTabInBackground"> Open Tabs In Background
       </div>
+      <div class="control">
+        <input type="checkbox" v-model="options.enableAdvanceSettings"> Show Advance Settings
+      </div>
+      <fieldset v-if="options.enableAdvanceSettings">
+        <legend>Custom Style</legend>
+        <p>If you have some swagger and a little CSS knowledge under your belt, you can take your form’s looks to the next level using the Advanced settings for your custom theme</p>
+        <textarea v-model="options.style" placeholder="Custom CSS Styles" rows="16"></textarea>
+      </fieldset>
     </template>
   </div>
 </template>
@@ -132,5 +143,9 @@
     display: inline-block;
     text-align: center;
     cursor: pointer;
+  }
+
+  textarea {
+    width: 100%;
   }
 </style>
