@@ -66,14 +66,13 @@ let options = {
 chrome.runtime.onInstalled.addListener(details => {
   if (details.reason === 'install') {
     chrome.storage.sync.set({ options }, chrome.runtime.openOptionsPage)
-  }
-})
-
-// Persistant options
-chrome.storage.sync.get('options', key => {
-  if (key.options && key.options.searchEngines && key.options.menu) {
-    // eslint-disable-next-line
-    options = key.options
+  } else {
+    // merge new options
+    chrome.storage.sync.get('options', key => {
+      options = Object.assign({}, options, key.options)
+      // save updated options
+      chrome.storage.sync.set({ options })
+    })
   }
 })
 
@@ -82,7 +81,7 @@ chrome.runtime.onMessage.addListener((request, sender) => {
   if (request.type === 'tab') {
     chrome.tabs.create({
       url: request.url,
-      active: !options.openTabInBackground
+      active: request.openTabInBackground
     })
   } else if (request.type === 'style') {
     chrome.tabs.insertCSS(sender.tab.id, {

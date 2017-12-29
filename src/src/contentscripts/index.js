@@ -34,7 +34,8 @@ function clickHandler (e) {
   } else {
     chrome.runtime.sendMessage({
       type: 'tab',
-      url: action
+      url: action,
+      openTabInBackground: options.openTabInBackground
     })
   }
 
