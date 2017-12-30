@@ -1,9 +1,7 @@
 .__selection-popup-container__ {
   position: absolute;
-  color: #eee;
   max-width: 180px;
-  background-color: #555;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 1px 1px #000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.75), 0 0 1px 1px #000;
   z-index: 999999;
   user-select: none;
   box-sizing: border-box;
@@ -19,10 +17,9 @@
   margin: 0;
   padding: 0;
   background-color: #555;
-  color: #fff;
-  padding: 5px 15px;
+  color: #eee;
+  padding: 3px 10px;
   list-style: none;
-  line-height: 1.5em;
   font-size: 14px;
   letter-spacing: 1px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -30,11 +27,11 @@
 }
 
 .__selection-popup-container__ ul li:hover {
-  background-color: #444;
+  background-color: #666;
 }
 
 .__selection-popup-container__ ul li:active {
-  background-color: #666;
+  background-color: #444;
 }
 
 .__selection-popup-container__ ul.single-liner li:nth-of-type(1),
@@ -44,12 +41,10 @@
 }
 
 .__selection-popup-container__ ul.single-liner li:nth-of-type(1) {
-  border-right: 1px solid #666;
+  border-right: 1px solid #444;
 }
 
 .__selection-popup-container__ ul.single-liner li:nth-of-type(3),
-.__selection-popup-container__
-  ul:not(.single-liner)
-  li.first-item:nth-of-type(2) {
-  border-top: 1px solid #666;
+.__selection-popup-container__ ul:not(.single-liner) li:not(:first-of-type) {
+  border-top: 1px solid #444;
 }

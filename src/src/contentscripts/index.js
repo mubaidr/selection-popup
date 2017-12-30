@@ -23,27 +23,20 @@ function clickHandler (e) {
   hidePopup()
 
   const { isCommand, action } = e.target.dataset
-
-  if (isCommand === 'true') {
-    switch (action) {
-      case 'gtwa':
-        chrome.runtime.sendMessage({
-          type: 'tab',
-          url: selectionText,
-          active: !options.openTabInBackground
-        })
-        break
-      case 'copy':
-      default:
-        document.execCommand('Copy')
-        break
-    }
-  } else {
+  if (isCommand === 'false') {
     chrome.runtime.sendMessage({
       type: 'tab',
       url: action.replace('%s', selectionText),
       active: !options.openTabInBackground
     })
+  } else if (action === 'gtwa') {
+    chrome.runtime.sendMessage({
+      type: 'tab',
+      url: selectionText,
+      active: !options.openTabInBackground
+    })
+  } else {
+    document.execCommand('Copy')
   }
 }
 
@@ -56,38 +49,70 @@ function validURL () {
 
 // show popup
 function addPopup () {
-  const { list } = options
   const container = document.createElement('div')
   const listContainer = document.createElement('ul')
-  const defaultEngine = list.searchEngines.items.length === 1
-  const propList = defaultEngine
-    ? ['searchEngines', 'menu']
-    : ['menu', 'searchEngines']
+  const types = Object.keys(options.list)
+  const defaultEngine = options.list.searchEngines.items.length === 1
 
-  if (!(list.menu.enabled || list.searchEngines.enabled)) return
+  if (defaultEngine) {
+    types.reverse()
+    listContainer.className = 'single-liner'
+  }
 
-  propList.forEach(key => {
-    if (list[key].enabled) {
-      list[key].items.forEach((item, index) => {
-        if (item.isCommand && !item.enabled) return
-        if (item.isCommand && item.command === 'gtwa' && !validURL()) return
+  types.forEach(key => {
+    if (!options.list[key].enabled) return
 
-        const li = document.createElement('li')
-        li.className = index === 0 ? 'first-item' : ''
-        li.innerText = defaultEngine && !item.isCommand ? 'Search' : item.name
-        li.setAttribute('data-is-command', !!item.isCommand)
-        li.setAttribute('data-action', item.isCommand ? item.command : item.url)
-        li.onclick = clickHandler
-        listContainer.appendChild(li)
-      })
-    }
+    options.list[key].items.forEach(item => {
+      const li = document.createElement('li')
+      const cmd = !!item.isCommand
+      let action
+
+      if (cmd) {
+        if (!item.enabled) return
+        if (item.command === 'gtwa' && !validURL()) return
+        action = item.command
+        li.innerText = item.name
+      } else {
+        action = item.url
+        li.innerText = defaultEngine ? 'Search' : item.name
+      }
+
+      li.setAttribute('data-is-command', cmd)
+      li.setAttribute('data-action', action)
+      li.onclick = clickHandler
+      listContainer.appendChild(li)
+    })
   })
 
-  listContainer.className = defaultEngine ? 'single-liner' : ''
   container.className = className
   container.style.display = 'none'
   container.appendChild(listContainer)
   document.body.appendChild(container)
+}
+
+function isPopupRequired () {
+  return (
+    selectionText &&
+    (options.list.menu.enabled || options.list.searchEngines.enabled)
+  )
+}
+
+function mouseUpHandler (e) {
+  hidePopup()
+
+  const selection = window.getSelection()
+  if (selection.type === 'Range') {
+    selectionText = (selection.focusNode.nodeValue || '')
+      .substring(selection.baseOffset, selection.focusOffset)
+      .trim()
+
+    if (isPopupRequired()) {
+      showPopup({
+        left: `${e.pageX}px`,
+        top: `${e.pageY + 14}px`
+      })
+    }
+  }
 }
 
 // add mouseup event to check selection to document
@@ -97,36 +122,20 @@ function setup () {
     // eslint-disable-next-line
     options = key.options
 
-    // add popup markup
-    addPopup()
-
     // inject custom css
-    if (options.enableAdvanceSettings && options.style.trim().length > 0) {
+    if (options.enableAdvanceSettings) {
       chrome.runtime.sendMessage({
         type: 'style',
         style: options.style
       })
     }
+
+    // add popup markup
+    addPopup()
   })
 
   // add text selection event
-  document.onmouseup = e => {
-    hidePopup()
-
-    const selection = window.getSelection()
-    if (selection.type === 'Range' && selection.focusNode.nodeValue) {
-      selectionText = selection.focusNode.nodeValue
-        .substring(selection.baseOffset, selection.focusOffset)
-        .trim()
-
-      if (selectionText) {
-        showPopup({
-          left: `${e.pageX}px`,
-          top: `${e.pageY + 14}px`
-        })
-      }
-    }
-  }
+  document.onmouseup = mouseUpHandler
 }
 
 setup()

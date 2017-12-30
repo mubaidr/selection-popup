@@ -1,8 +1,6 @@
 <template>
   <div>
     <template v-if="options">
-      <h1>Welcome</h1>
-      <p> You can control the functionality here. </p>
       <p> Please note that you will need to <strong>reload</strong> current tabs to apply new changes. </p>
       <div class="control">
         <input type="checkbox" v-model="options.list.searchEngines.enabled"> Enable Search Engines
@@ -102,7 +100,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
   fieldset {
     border: 1px solid rgba(0, 0, 0, 0.1);
   }
@@ -121,7 +119,6 @@
 
   .my-handle {
     width: 5%;
-    padding: 5px 0;
     display: inline-block;
     cursor: move;
     cursor: -webkit-grabbing;
@@ -138,7 +135,6 @@
   }
 
   .remove {
-    padding: 5px 0;
     width: 5%;
     display: inline-block;
     text-align: center;

@@ -1,4 +1,4 @@
-// Default cofigurations
+// Default configurations
 let options = {
   list: {
     searchEngines: {
@@ -10,15 +10,23 @@ let options = {
         },
         {
           name: 'Google',
-          url: 'http://google.com/search?q=%s'
+          url: 'https://google.com/search?q=%s'
         },
         {
           name: 'Youtube',
           url: 'https://www.youtube.com/results?search_query=%s'
         },
         {
-          name: 'Stackoverflow',
-          url: 'http://stackoverflow.com/search?q=%s'
+          name: 'Stack Overflow',
+          url: 'https://stackoverflow.com/search?q=%s'
+        },
+        {
+          name: 'IMDB',
+          url: 'https://www.imdb.com/find?ref_=nv_sr_fn&q=%s&s=all'
+        },
+        {
+          name: 'Wikipedia',
+          url: 'https://en.wikipedia.org/wiki/%s'
         }
       ]
     },
@@ -62,7 +70,7 @@ let options = {
     /* for other possibilities or live testing you can inspect the popup */`
 }
 
-// Oninstall handler
+// OnInstall handler
 chrome.runtime.onInstalled.addListener(details => {
   if (details.reason === 'install') {
     chrome.storage.sync.set({ options }, chrome.runtime.openOptionsPage)
