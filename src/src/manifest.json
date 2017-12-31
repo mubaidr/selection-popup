@@ -1,6 +1,6 @@
 {
   "name": "Selection Popup",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "manifest_version": 2,
   "description":
     "Perform customizable actions (Search, Copy etc) on selected text.",
@@ -11,7 +11,7 @@
   "background": {
     "scripts": ["background.js"]
   },
-  "permissions": ["http://*/*", "https://*/*", "background", "storage", "tabs"],
+  "permissions": ["http://*/*", "https://*/*", "storage", "tabs"],
   "options_ui": {
     "page": "options/index.html",
     "chrome_style": false
