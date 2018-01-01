@@ -2,7 +2,10 @@
 let options = {
   list: {
     searchEngines: {
+      // display search engines
       enabled: true,
+      // list of search engines
+      // %s will be replaced by selected text in content script
       items: [
         {
           name: 'Duck Duck Go',
@@ -31,15 +34,18 @@ let options = {
       ]
     },
     menu: {
+      // display commands in popup
       enabled: true,
       items: [
         {
+          // copy to clipboard
           name: 'Copy',
           enabled: true,
           command: 'copy',
           isCommand: true
         },
         {
+          // show this option if selected text is a valid url
           name: 'Go to Web Address',
           enabled: true,
           command: 'gtwa',
@@ -48,8 +54,11 @@ let options = {
       ]
     }
   },
+  // open all tabs in background
   openTabInBackground: true,
+  // enable advance settings like custom styles for popup
   enableAdvanceSettings: false,
+  // custom styles for popup
   style: `.__selection-popup-container__ {
       /* main container*/
       /* you should only need to customize background-color*/
@@ -73,9 +82,10 @@ let options = {
 // OnInstall handler
 chrome.runtime.onInstalled.addListener(details => {
   if (details.reason === 'install') {
+    // set default options
     chrome.storage.sync.set({ options }, chrome.runtime.openOptionsPage)
   } else {
-    // merge new options
+    // merge new options with user options
     chrome.storage.sync.get('options', key => {
       options = Object.assign({}, options, key.options)
 
@@ -88,11 +98,13 @@ chrome.runtime.onInstalled.addListener(details => {
 // Share settings with content script
 chrome.runtime.onMessage.addListener((request, sender) => {
   if (request.type === 'tab') {
+    // open new tab for search or gtwa command
     chrome.tabs.create({
       url: request.url,
       active: request.active
     })
   } else if (request.type === 'style') {
+    // insert css into tab
     chrome.tabs.insertCSS(sender.tab.id, {
       code: request.style,
       allFrames: true

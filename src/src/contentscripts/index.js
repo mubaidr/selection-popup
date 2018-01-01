@@ -10,7 +10,7 @@ function hidePopup () {
   document.getElementsByClassName(className)[0].style.display = 'none'
 }
 
-// hide popup
+// show popup at selection position
 function showPopup (position) {
   const popup = document.getElementsByClassName(className)[0]
   popup.style.left = position.left
@@ -47,7 +47,7 @@ function validURL () {
   return regexp.test(selectionText)
 }
 
-// show popup
+// add popup to the page, we will only toggle display and postion later
 function addPopup () {
   const container = document.createElement('div')
   const listContainer = document.createElement('ul')
@@ -55,6 +55,7 @@ function addPopup () {
   const defaultEngine = options.list.searchEngines.items.length === 1
 
   if (defaultEngine) {
+    // we need to change order of list items, search option will be displayed first
     types.reverse()
     listContainer.className = 'single-liner'
   }
@@ -77,6 +78,7 @@ function addPopup () {
         li.innerText = defaultEngine ? 'Search' : item.name
       }
 
+      // add data to item data attributes
       li.setAttribute('data-is-command', cmd)
       li.setAttribute('data-action', action)
       li.onclick = clickHandler
@@ -90,6 +92,7 @@ function addPopup () {
   document.body.appendChild(container)
 }
 
+// check if popup should be displayed or skipped
 function isPopupRequired () {
   return (
     selectionText &&
@@ -97,6 +100,7 @@ function isPopupRequired () {
   )
 }
 
+// detect text selection
 function mouseUpHandler (e) {
   hidePopup()
 
@@ -138,4 +142,5 @@ function setup () {
   document.onmouseup = mouseUpHandler
 }
 
+// prepare popup and add event handlers
 setup()
