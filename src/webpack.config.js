@@ -72,7 +72,7 @@ const config = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  config.devtool = '#cheap-module-source-map'
+  // config.devtool = '#cheap-module-source-map'
 
   config.plugins = (config.plugins || []).concat([
     new webpack.DefinePlugin({
