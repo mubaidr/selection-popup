@@ -72,6 +72,7 @@ const config = {
 }
 
 if (process.env.NODE_ENV === 'production') {
+  config.devtool = false
   // config.devtool = '#cheap-module-source-map'
 
   config.plugins = (config.plugins || []).concat([
