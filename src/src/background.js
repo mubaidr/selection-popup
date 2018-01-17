@@ -43,13 +43,6 @@ let options = {
           enabled: true,
           command: 'copy',
           isCommand: true
-        },
-        {
-          // show this option if selected text is a valid url
-          name: 'Go to Web Address',
-          enabled: true,
-          command: 'gtwa',
-          isCommand: true
         }
       ]
     }
@@ -88,6 +81,9 @@ chrome.runtime.onInstalled.addListener(details => {
     // merge new options with user options
     chrome.storage.sync.get('options', key => {
       options = Object.assign({}, options, key.options)
+
+      // remove obselete option param
+      options.list.menu.items = [options.list.menu.items[0]]
 
       // save updated options
       chrome.storage.sync.set({ options })

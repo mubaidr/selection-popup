@@ -1,50 +1,52 @@
 .__selection-popup-container__ {
-  position: absolute;
-  max-width: 180px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.75), 0 0 1px 1px #000;
-  z-index: 999999;
-  user-select: none;
-  box-sizing: border-box;
+  position: absolute !important;
+  min-width: 140px !important;
+  max-width: 180px !important;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5) !important;
+  z-index: 999999 !important;
+  user-select: none !important;
+  box-sizing: border-box !important;
 }
 
 .__selection-popup-container__ ul {
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  padding: 0 !important;
   box-sizing: border-box !important;
 }
 
 .__selection-popup-container__ ul li {
-  margin: 0;
-  padding: 0;
-  background-color: #555;
-  color: #eee;
-  padding: 3px 10px;
-  list-style: none;
-  font-size: 14px;
-  letter-spacing: 1px;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  text-overflow: ellipsis;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #555 !important;
+  color: #eee !important;
+  padding: 3px 10px !important;
+  list-style: none !important;
+  font-size: 14px !important;
+  line-height: 24px !important;
+  letter-spacing: 1px !important;
+  font-family: Calibri, 'Trebuchet MS', sans-serif !important;
+  text-overflow: ellipsis !important;
 }
 
 .__selection-popup-container__ ul li:hover {
-  background-color: #666;
+  background-color: #666 !important;
 }
 
 .__selection-popup-container__ ul li:active {
-  background-color: #444;
+  background-color: #444 !important;
 }
 
 .__selection-popup-container__ ul.single-liner li:nth-of-type(1),
 .__selection-popup-container__ ul.single-liner li:nth-of-type(2) {
-  display: inline-block;
-  width: calc(50% - 31);
+  display: inline-block !important;
+  width: calc(50% - 31) !important;
 }
 
 .__selection-popup-container__ ul.single-liner li:nth-of-type(1) {
-  border-right: 1px solid #444;
+  border-right: 1px solid #444 !important;
 }
 
 .__selection-popup-container__ ul.single-liner li:nth-of-type(3),
 .__selection-popup-container__ ul:not(.single-liner) li:not(:first-of-type) {
-  border-top: 1px solid #444;
+  border-top: 1px solid #444 !important;
 }

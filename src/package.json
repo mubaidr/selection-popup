@@ -2,13 +2,22 @@
   "name": "selection-popup",
   "version": "1.7.6",
   "description": "Perform customizable actions (Search, Copy etc) on selected text.",
-  "author": "Muhammad Ubaid Raza <mubaidr@gmail.com>",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --hide-modules",
     "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.js --progress --hide-modules",
     "build-zip": "node scripts/build-zip.js",
     "watch": "npm run build -- --watch",
     "watch:dev": "npm run build:dev -- --watch"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Muhammad Ubaid Raza",
+    "email": "mubaidr@gmail.com",
+    "url": "https://mubaidr.github.io/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mubaidr/webpack-prerender-plugin.git"
   },
   "dependencies": {
     "vue": "^2.5.13",
@@ -27,6 +36,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-vue": "beta",
     "eslint": "^4.14.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",

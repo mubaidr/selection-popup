@@ -29,22 +29,9 @@ function clickHandler (e) {
       url: action.replace('%s', selectionText),
       active: !options.openTabInBackground
     })
-  } else if (action === 'gtwa') {
-    chrome.runtime.sendMessage({
-      type: 'tab',
-      url: selectionText,
-      active: !options.openTabInBackground
-    })
   } else {
     document.execCommand('Copy')
   }
-}
-
-// check if selected text is a url
-function validURL () {
-  // eslint-disable-next-line
-  const regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-  return regexp.test(selectionText)
 }
 
 // add popup to the page, we will only toggle display and postion later
@@ -70,7 +57,6 @@ function addPopup () {
 
       if (cmd) {
         if (!item.enabled) return
-        if (item.command === 'gtwa' && !validURL()) return
         action = item.command
         li.innerText = item.name
       } else {
