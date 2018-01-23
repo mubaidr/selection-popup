@@ -2,7 +2,7 @@
   position: absolute !important;
   min-width: 140px !important;
   max-width: 180px !important;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 1) !important;
   z-index: 999999 !important;
   user-select: none !important;
   box-sizing: border-box !important;
@@ -42,7 +42,13 @@
   width: calc(50% - 31) !important;
 }
 
+.__selection-popup-container__ ul.single-liner li {
+  padding: 7px 10px !important;
+  width: calc(50% - 20px) !important;
+}
+
 .__selection-popup-container__ ul.single-liner li:nth-of-type(1) {
+  width: calc(50% - 21px) !important;
   border-right: 1px solid #444 !important;
 }
 
