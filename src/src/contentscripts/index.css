@@ -1,58 +1,52 @@
-.__selection-popup-container__ {
+div.__selection-popup-container__ {
   position: absolute !important;
-  min-width: 140px !important;
-  max-width: 180px !important;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 1) !important;
   z-index: 999999 !important;
+}
+
+div.__selection-popup-container__ > ul {
+  margin: 0 !important;
+  padding: 0 !important;
   user-select: none !important;
-  box-sizing: border-box !important;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 1) !important;
+  height: 32px !important;
 }
 
-.__selection-popup-container__ ul {
+div.__selection-popup-container__ > ul > li {
   margin: 0 !important;
-  padding: 0 !important;
-  box-sizing: border-box !important;
-}
-
-.__selection-popup-container__ ul li {
-  margin: 0 !important;
-  padding: 0 !important;
+  padding: 0 7px !important;
   background-color: #555 !important;
   color: #eee !important;
-  padding: 3px 10px !important;
+  width: 160px !important;
   list-style: none !important;
   font-size: 14px !important;
-  line-height: 24px !important;
+  line-height: 32px !important;
   letter-spacing: 1px !important;
   font-family: Calibri, 'Trebuchet MS', sans-serif !important;
+  overflow: hidden !important;
   text-overflow: ellipsis !important;
 }
 
-.__selection-popup-container__ ul li:hover {
+div.__selection-popup-container__ > ul > li:hover {
   background-color: #666 !important;
 }
 
-.__selection-popup-container__ ul li:active {
+div.__selection-popup-container__ > ul > li:active {
   background-color: #444 !important;
 }
 
-.__selection-popup-container__ ul.single-liner li:nth-of-type(1),
-.__selection-popup-container__ ul.single-liner li:nth-of-type(2) {
+div.__selection-popup-container__ > ul.single-liner > li {
+  text-align: center;
   display: inline-block !important;
-  width: calc(50% - 31) !important;
+  width: 74px !important;
+  border-right: 1px solid #555 !important;
 }
 
-.__selection-popup-container__ ul.single-liner li {
-  padding: 7px 10px !important;
-  width: calc(50% - 20px) !important;
-}
-
-.__selection-popup-container__ ul.single-liner li:nth-of-type(1) {
-  width: calc(50% - 21px) !important;
+div.__selection-popup-container__ > ul.single-liner > li:nth-of-type(1) {
   border-right: 1px solid #444 !important;
 }
 
-.__selection-popup-container__ ul.single-liner li:nth-of-type(3),
-.__selection-popup-container__ ul:not(.single-liner) li:not(:first-of-type) {
+div.__selection-popup-container__
+  > ul:not(.single-liner)
+  > li:not(:first-of-type) {
   border-top: 1px solid #444 !important;
 }
