@@ -7,15 +7,17 @@ div.__selection-popup-container__ > ul {
   margin: 0 !important;
   padding: 0 !important;
   user-select: none !important;
+  border: 1px solid #444 !important;
   box-shadow: 0 0 25px rgba(0, 0, 0, 1) !important;
-  height: 32px !important;
+  border-radius: 4px !important;
 }
 
 div.__selection-popup-container__ > ul > li {
+  display: block;
   margin: 0 !important;
   padding: 0 7px !important;
   background-color: #555 !important;
-  color: #eee !important;
+  color: #fff !important;
   width: 160px !important;
   list-style: none !important;
   font-size: 14px !important;
@@ -24,6 +26,7 @@ div.__selection-popup-container__ > ul > li {
   font-family: Calibri, 'Trebuchet MS', sans-serif !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
+  transition: background 0.25s ease-out !important;
 }
 
 div.__selection-popup-container__ > ul > li:hover {
