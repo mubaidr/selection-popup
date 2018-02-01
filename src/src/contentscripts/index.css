@@ -9,7 +9,7 @@ div.__selection-popup-container__ > ul {
   user-select: none !important;
   border: 1px solid #444 !important;
   box-shadow: 0 0 25px rgba(0, 0, 0, 1) !important;
-  border-radius: 4px !important;
+  border-radius: 2px !important;
 }
 
 div.__selection-popup-container__ > ul > li {
@@ -26,7 +26,7 @@ div.__selection-popup-container__ > ul > li {
   font-family: Calibri, 'Trebuchet MS', sans-serif !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
-  transition: background 0.25s ease-out !important;
+  transition: all 0.25s ease-out !important;
 }
 
 div.__selection-popup-container__ > ul > li:hover {
@@ -35,6 +35,10 @@ div.__selection-popup-container__ > ul > li:hover {
 
 div.__selection-popup-container__ > ul > li:active {
   background-color: #444 !important;
+}
+
+div.__selection-popup-container__ > ul.single-liner {
+  height: 34px !important;
 }
 
 div.__selection-popup-container__ > ul.single-liner > li {
