@@ -7,7 +7,10 @@ let options = null
 
 // hide popup
 function hidePopup () {
-  document.getElementsByClassName(className)[0].style.display = 'none'
+  Array.from(document.getElementsByClassName(className)).forEach(elem => {
+    // eslint-disable-next-line
+    elem.style.display = 'none'
+  })
 }
 
 // show popup at selection position
@@ -88,8 +91,6 @@ function isPopupRequired () {
 
 // detect text selection
 function mouseUpHandler (e) {
-  hidePopup()
-
   const selection = window.getSelection()
   if (selection.type === 'Range') {
     selectionText = (selection.focusNode.nodeValue || '')
@@ -125,6 +126,7 @@ function setup () {
   })
 
   // add text selection event
+  document.onmousedown = hidePopup
   document.onmouseup = mouseUpHandler
 }
 
