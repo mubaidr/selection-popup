@@ -4,6 +4,23 @@ import './index.css'
 const className = '__selection-popup-container__'
 let selectionText = ''
 let options = null
+let popupTimeout = null
+
+// check if popup should be displayed or skipped
+function isPopupRequired () {
+  return (
+    selectionText &&
+    (options.list.menu.enabled || options.list.searchEngines.enabled)
+  )
+}
+
+// show popup at selection position
+function showPopup (position) {
+  const popup = document.getElementsByClassName(className)[0]
+  popup.style.left = position.left
+  popup.style.top = position.top
+  popup.style.display = 'block'
+}
 
 // hide popup
 function hidePopup () {
@@ -13,12 +30,29 @@ function hidePopup () {
   })
 }
 
-// show popup at selection position
-function showPopup (position) {
-  const popup = document.getElementsByClassName(className)[0]
-  popup.style.left = position.left
-  popup.style.top = position.top
-  popup.style.display = 'block'
+// Hanlde mouse popup
+function handleMouseUp (e) {
+  hidePopup()
+
+  const { action } = e.target.dataset
+  if (action) return
+
+  window.clearTimeout(popupTimeout)
+  popupTimeout = window.setTimeout(() => {
+    const selection = window.getSelection()
+    if (selection.type === 'Range') {
+      selectionText = (selection.focusNode.nodeValue || '')
+        .substring(selection.baseOffset, selection.focusOffset)
+        .trim()
+
+      if (isPopupRequired()) {
+        showPopup({
+          left: `${e.pageX}px`,
+          top: `${e.pageY + 14}px`
+        })
+      }
+    }
+  }, 50)
 }
 
 // handle click on menu item
@@ -81,31 +115,6 @@ function addPopup () {
   document.body.appendChild(container)
 }
 
-// check if popup should be displayed or skipped
-function isPopupRequired () {
-  return (
-    selectionText &&
-    (options.list.menu.enabled || options.list.searchEngines.enabled)
-  )
-}
-
-// detect text selection
-function mouseUpHandler (e) {
-  const selection = window.getSelection()
-  if (selection.type === 'Range') {
-    selectionText = (selection.focusNode.nodeValue || '')
-      .substring(selection.baseOffset, selection.focusOffset)
-      .trim()
-
-    if (isPopupRequired()) {
-      showPopup({
-        left: `${e.pageX}px`,
-        top: `${e.pageY + 14}px`
-      })
-    }
-  }
-}
-
 // add mouseup event to check selection to document
 function setup () {
   // Get options
@@ -126,8 +135,7 @@ function setup () {
   })
 
   // add text selection event
-  document.onmousedown = hidePopup
-  document.onmouseup = mouseUpHandler
+  document.onmouseup = handleMouseUp
 }
 
 // prepare popup and add event handlers
