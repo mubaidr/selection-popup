@@ -136,6 +136,12 @@ function setup () {
 
   // add text selection event
   document.onmouseup = handleMouseUp
+  // Hide on escape
+  document.onkeydown = e => {
+    if (e.keyCode === 27) {
+      hidePopup()
+    }
+  }
 }
 
 // prepare popup and add event handlers
