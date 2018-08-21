@@ -1,38 +1,22 @@
 {
-  "name": "selection-popup",
-  "version": "1.9.2",
-  "description":
-    "Perform customizable actions (Search, Copy etc) on selected text.",
-  "scripts": {
-    "build":
-      "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --hide-modules",
-    "build:dev":
-      "cross-env NODE_ENV=development webpack --config webpack.config.js --progress --hide-modules",
-    "build-zip": "node scripts/build-zip.js",
-    "watch": "npm run build -- --watch",
-    "watch:dev": "npm run build:dev -- --watch"
-  },
-  "license": "MIT",
   "author": {
-    "name": "Muhammad Ubaid Raza",
     "email": "mubaidr@gmail.com",
+    "name": "Muhammad Ubaid Raza",
     "url": "https://mubaidr.github.io/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mubaidr/webpack-prerender-plugin.git"
   },
   "dependencies": {
     "vue": "^2.5.13",
     "vuedraggable": "^2.15.0"
   },
+  "description": "Perform customizable actions (Search, Copy etc) on selected text.",
   "devDependencies": {
-    "babel-preset-env": "^1.6.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
     "copy-webpack-plugin": "^4.3.1",
-    "cross-env": "^5.1.3",
+    "cross-env": "^5.2.0",
     "css-loader": "^0.28.7",
+    "eslint": "^4.14.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-html": "^4.0.1",
@@ -40,7 +24,6 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
     "eslint-plugin-vue": "beta",
-    "eslint": "^4.14.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
     "node-sass": "^4.7.2",
@@ -50,5 +33,19 @@
     "webpack": "^3.10.0",
     "webpack-shell-plugin": "^0.5.0",
     "zip-folder": "^1.0.0"
-  }
+  },
+  "license": "MIT",
+  "name": "selection-popup",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mubaidr/webpack-prerender-plugin.git"
+  },
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --hide-modules",
+    "build-zip": "node scripts/build-zip.js",
+    "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.js --progress --hide-modules",
+    "watch": "npm run build -- --watch",
+    "watch:dev": "npm run build:dev -- --watch"
+  },
+  "version": "1.9.4"
 }

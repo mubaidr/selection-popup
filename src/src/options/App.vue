@@ -42,6 +42,9 @@
         <input type="checkbox" v-model="options.openTabInBackground"> Open Tabs In Background
       </div>
       <div class="control">
+        <input type="checkbox" v-model="options.openTabNextToActive"> Open new tab next to active tab
+      </div>
+      <div class="control">
         <input type="checkbox" v-model="options.enableAdvanceSettings"> Show Advance Settings
       </div>
       <fieldset v-if="options.enableAdvanceSettings">
@@ -54,94 +57,98 @@
 </template>
 
 <script>
-  import draggable from 'vuedraggable'
+import draggable from 'vuedraggable';
 
-  export default {
-    components: {
-      draggable
-    },
-    data () {
-      return {
-        options: null,
-        _timer: null
-      }
-    },
-    watch: {
-      options: {
-        handler () {
-          window.clearTimeout(this._timer)
-          this._timer = window.setTimeout(this.setOptions, 250)
-        },
-        deep: true
-      }
-    },
-    created () {
-      this.getOptions()
-    },
-    methods: {
-      addItem () {
-        this.options.list.searchEngines.items.push({
-          name: '',
-          url: ''
-        })
+export default {
+  components: {
+    draggable,
+  },
+  data () {
+    return {
+      options: null,
+      _timer: null,
+    };
+  },
+  watch: {
+    options: {
+      handler () {
+        window.clearTimeout(this._timer);
+        this._timer = window.setTimeout(this.setOptions, 250);
+        chrome.runtime.sendMessage({
+          type: 'options',
+          options: this.options,
+        });
       },
-      removeItem (index) {
-        this.options.list.searchEngines.items.splice(index, 1)
-      },
-      getOptions () {
-        chrome.storage.sync.get('options', key => {
-          this.options = key.options
-        })
-      },
-      setOptions () {
-        chrome.storage.sync.set({ options: this.options })
-      }
-    }
-  }
+      deep: true,
+    },
+  },
+  created () {
+    this.getOptions();
+  },
+  methods: {
+    addItem () {
+      this.options.list.searchEngines.items.push({
+        name: '',
+        url: '',
+      });
+    },
+    removeItem (index) {
+      this.options.list.searchEngines.items.splice(index, 1);
+    },
+    getOptions () {
+      chrome.storage.sync.get('options', key => {
+        this.options = key.options;
+      });
+    },
+    setOptions () {
+      chrome.storage.sync.set({ options: this.options });
+    },
+  },
+};
 </script>
 
 <style scoped>
-  fieldset {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-  }
+fieldset {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
 
-  .control {
-    margin: 15px 0;
-  }
+.control {
+  margin: 15px 0;
+}
 
-  .item {
-    margin: 10px 0;
-  }
+.item {
+  margin: 10px 0;
+}
 
-  .item .group {
-    float: right;
-  }
+.item .group {
+  float: right;
+}
 
-  .my-handle {
-    width: 5%;
-    display: inline-block;
-    cursor: move;
-    cursor: -webkit-grabbing;
-  }
+.my-handle {
+  width: 5%;
+  display: inline-block;
+  cursor: move;
+  cursor: -webkit-grabbing;
+}
 
-  .name {
-    width: 23%;
-    display: inline-block;
-  }
+.name {
+  width: 23%;
+  display: inline-block;
+}
 
-  .url {
-    width: 60%;
-    display: inline-block;
-  }
+.url {
+  width: 60%;
+  display: inline-block;
+}
 
-  .remove {
-    width: 5%;
-    display: inline-block;
-    text-align: center;
-    cursor: pointer;
-  }
+.remove {
+  width: 5%;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+}
 
-  textarea {
-    width: 100%;
-  }
+textarea {
+  width: 100%;
+}
 </style>
