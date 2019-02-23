@@ -72,26 +72,26 @@ let options = {
     }
 
     /* for other possibilities or live testing you can inspect the popup */`,
-};
+}
 
 // OnInstall handler
 chrome.runtime.onInstalled.addListener(details => {
   if (details.reason === 'install') {
     // set default options
-    chrome.storage.sync.set({ options }, chrome.runtime.openOptionsPage);
+    chrome.storage.sync.set({ options }, chrome.runtime.openOptionsPage)
   } else {
     // merge new options with user options
     chrome.storage.sync.get('options', key => {
-      options = Object.assign({}, options, key.options);
+      options = Object.assign({}, options, key.options)
 
       // remove obselete option param
-      options.list.menu.items = [options.list.menu.items[0]];
+      options.list.menu.items = [options.list.menu.items[0]]
 
       // save updated options
-      chrome.storage.sync.set({ options });
-    });
+      chrome.storage.sync.set({ options })
+    })
   }
-});
+})
 
 // Share settings with content script
 chrome.runtime.onMessage.addListener((request, sender) => {
@@ -103,28 +103,28 @@ chrome.runtime.onMessage.addListener((request, sender) => {
           currentWindow: true,
         },
         tabs => {
-          const { index } = tabs[0];
+          const { index } = tabs[0]
 
           // open new tab for search or gtwa command
           chrome.tabs.create({
             index: index + 1,
             url: request.url,
             active: request.active,
-          });
+          })
         }
-      );
+      )
     } else {
       // open new tab for search or gtwa command
-      chrome.tabs.create({ url: request.url, active: request.active });
+      chrome.tabs.create({ url: request.url, active: request.active })
     }
   } else if (request.type === 'style') {
     // insert css into tab
     chrome.tabs.insertCSS(sender.tab.id, {
       code: request.style,
       allFrames: true,
-    });
+    })
   } else if (request.type === 'options') {
     // eslint-disable-next-line
-    options = request.options;
+    options = request.options
   }
-});
+})

@@ -7,7 +7,7 @@ let options = null
 let popupTimeout = null
 
 // check if popup should be displayed or skipped
-function isPopupRequired () {
+function isPopupRequired() {
   return (
     selectionText &&
     (options.list.menu.enabled || options.list.searchEngines.enabled)
@@ -15,7 +15,7 @@ function isPopupRequired () {
 }
 
 // show popup at selection position
-function showPopup (position) {
+function showPopup(position) {
   const popup = document.getElementsByClassName(className)[0]
   popup.style.left = position.left
   popup.style.top = position.top
@@ -23,7 +23,7 @@ function showPopup (position) {
 }
 
 // hide popup
-function hidePopup () {
+function hidePopup() {
   Array.from(document.getElementsByClassName(className)).forEach(elem => {
     // eslint-disable-next-line
     elem.style.display = 'none'
@@ -31,7 +31,7 @@ function hidePopup () {
 }
 
 // Hanlde mouse popup
-function handleMouseUp (e) {
+function handleMouseUp(e) {
   hidePopup()
 
   const { action } = e.target.dataset
@@ -48,7 +48,7 @@ function handleMouseUp (e) {
       if (isPopupRequired()) {
         showPopup({
           left: `${e.pageX}px`,
-          top: `${e.pageY + 14}px`
+          top: `${e.pageY + 14}px`,
         })
       }
     }
@@ -56,7 +56,7 @@ function handleMouseUp (e) {
 }
 
 // handle click on menu item
-function clickHandler (e) {
+function clickHandler(e) {
   hidePopup()
 
   const { isCommand, action } = e.target.dataset
@@ -64,7 +64,7 @@ function clickHandler (e) {
     chrome.runtime.sendMessage({
       type: 'tab',
       url: action.replace('%s', selectionText),
-      active: !options.openTabInBackground
+      active: !options.openTabInBackground,
     })
   } else {
     document.execCommand('Copy')
@@ -72,7 +72,7 @@ function clickHandler (e) {
 }
 
 // add popup to the page, we will only toggle display and postion later
-function addPopup () {
+function addPopup() {
   const container = document.createElement('div')
   const listContainer = document.createElement('ul')
   const types = Object.keys(options.list)
@@ -116,7 +116,7 @@ function addPopup () {
 }
 
 // add mouseup event to check selection to document
-function setup () {
+function setup() {
   // Get options
   chrome.storage.sync.get('options', key => {
     // eslint-disable-next-line
@@ -126,7 +126,7 @@ function setup () {
     if (options.enableAdvanceSettings) {
       chrome.runtime.sendMessage({
         type: 'style',
-        style: options.style
+        style: options.style,
       })
     }
 

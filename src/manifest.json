@@ -1,9 +1,8 @@
 {
   "name": "Selection Popup",
-  "version": "1.9.2",
+  "version": "1.9.5",
   "manifest_version": 2,
-  "description":
-    "Perform customizable actions (Search, Copy etc) on selected text.",
+  "description": "Perform customizable actions (Search, Copy etc) on selected text.",
   "icons": {
     "16": "assets/icons/icon_48.png",
     "128": "assets/icons/icon_128.png"
@@ -13,14 +12,14 @@
   },
   "permissions": ["http://*/*", "https://*/*", "storage", "tabs"],
   "options_ui": {
-    "page": "options/index.html",
+    "page": "options.html",
     "chrome_style": true
   },
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": ["./contentscripts/index.js"],
-      "css": ["./contentscripts/index.css"],
+      "js": ["./contentScripts.js"],
+      "css": ["./contentScripts.css"],
       "run_at": "document_end",
       "all_frames": true
     }
