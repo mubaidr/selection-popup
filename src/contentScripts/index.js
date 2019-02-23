@@ -38,21 +38,20 @@ function handleMouseUp(e) {
   if (action) return
 
   window.clearTimeout(popupTimeout)
-  popupTimeout = window.setTimeout(() => {
-    const selection = window.getSelection()
-    if (selection.type === 'Range') {
-      selectionText = (selection.focusNode.nodeValue || '')
-        .substring(selection.baseOffset, selection.focusOffset)
-        .trim()
 
-      if (isPopupRequired()) {
-        showPopup({
-          left: `${e.pageX}px`,
-          top: `${e.pageY + 14}px`,
-        })
-      }
+  popupTimeout = window.setTimeout(() => {
+    selectionText = window
+      .getSelection()
+      .toString()
+      .trim()
+
+    if (isPopupRequired()) {
+      showPopup({
+        left: `${e.pageX}px`,
+        top: `${e.pageY + 14}px`,
+      })
     }
-  }, 50)
+  }, 100)
 }
 
 // handle click on menu item
