@@ -1,28 +1,27 @@
 {
-  "name": "Selection Popup",
-  "version": "1.9.5",
-  "manifest_version": 2,
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "css": ["./contentScripts.css"],
+      "js": ["./contentScripts.js"],
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "description": "Perform customizable actions (Search, Copy etc) on selected text.",
   "icons": {
     "16": "assets/icons/icon_48.png",
     "128": "assets/icons/icon_128.png"
   },
-  "background": {
-    "scripts": ["background.js"]
+  "manifest_version": 2,
+  "name": "Selection Popup",
+  "options_ui": {
+    "page": "options.html"
   },
   "permissions": ["http://*/*", "https://*/*", "storage", "tabs"],
-  "options_ui": {
-    "page": "options.html",
-    "chrome_style": true
-  },
-  "content_scripts": [
-    {
-      "matches": ["http://*/*", "https://*/*"],
-      "js": ["./contentScripts.js"],
-      "css": ["./contentScripts.css"],
-      "run_at": "document_end",
-      "all_frames": true
-    }
-  ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  "version": "1.9.6"
 }

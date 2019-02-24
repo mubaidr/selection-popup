@@ -56,5 +56,5 @@
     "zip": "node scripts/build-zip.js",
     "lint": "eslint --ext .js,.vue --fix ./src"
   },
-  "version": "1.9.5"
+  "version": "1.9.6"
 }
