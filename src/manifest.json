@@ -1,13 +1,22 @@
 {
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background.js"
+    ]
   },
   "content_scripts": [
     {
       "all_frames": true,
-      "css": ["./contentScripts.css"],
-      "js": ["./contentScripts.js"],
-      "matches": ["http://*/*", "https://*/*"],
+      "css": [
+        "./contentScript.css"
+      ],
+      "js": [
+        "./contentScript.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
       "run_at": "document_end"
     }
   ],
@@ -22,6 +31,11 @@
   "options_ui": {
     "page": "options.html"
   },
-  "permissions": ["http://*/*", "https://*/*", "storage", "tabs"],
-  "version": "1.9.6"
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "storage",
+    "tabs"
+  ],
+  "version": "1.9.7"
 }

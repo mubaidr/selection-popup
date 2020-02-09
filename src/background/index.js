@@ -47,6 +47,10 @@ let options = {
       ],
     },
   },
+  // Disable for input controls
+  disableForInputControls: true,
+  // auto hide popup after some time
+  popupTimeout: 0,
   // open all tabs in background
   openTabInBackground: true,
   // open new tab in background
@@ -54,7 +58,8 @@ let options = {
   // enable advance settings like custom styles for popup
   enableAdvanceSettings: false,
   // custom styles for popup
-  style: `.__selection-popup-container__ {
+  style: `
+  .__selection-popup-container__ {
       /* main container*/
       /* you should only need to customize background-color*/
     }
@@ -71,7 +76,8 @@ let options = {
       /* item active state */
     }
 
-    /* for other possibilities or live testing you can inspect the popup */`,
+    /* for other possibilities or live testing you can inspect the popup */
+    `,
 }
 
 // OnInstall handler

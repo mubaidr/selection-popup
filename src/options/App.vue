@@ -1,22 +1,24 @@
 <template>
   <div>
     <template v-if="options">
-      <p> Please note that you will need to <strong>reload</strong> current tabs to apply new changes. </p>
+      <p>
+        Please note that you will need to <strong>reload</strong> current tabs
+        to apply new changes.
+      </p>
       <div class="control">
-        <input
-          v-model="options.list.searchEngines.enabled"
-          type="checkbox"
-        > Enable Search Engines
+        <input v-model="options.list.searchEngines.enabled" type="checkbox" />
+        Enable Search Engines
       </div>
       <fieldset v-if="options.list.searchEngines.enabled">
         <legend>Search Engines</legend>
         <p>
-          Add search engines and change the order. <br>
-          Use <strong>%s</strong> in the search url to represent <strong>selected text.</strong>
+          Add search engines and change the order. <br />
+          Use <strong>%s</strong> in the search url to represent
+          <strong>selected text.</strong>
         </p>
         <draggable
           v-model="options.list.searchEngines.items"
-          :options="{draggable:'.item'}"
+          v-bind="{ draggable: '.item' }"
           handle=".my-handle"
         >
           <div
@@ -25,10 +27,7 @@
             track-by="$index"
             class="item"
           >
-            <div
-              class="my-handle"
-              title="Drag to Sort"
-            >
+            <div class="my-handle" title="Drag to Sort">
               ::::
             </div>
             <input
@@ -37,14 +36,14 @@
               class="name"
               placeholder="Name"
               title="Name"
-            >
+            />
             <input
               v-model="item.url"
               type="text"
               class="url"
               placeholder="URL"
               title="URL"
-            >
+            />
             <div
               class="remove"
               title="Remove Search Engine"
@@ -54,23 +53,24 @@
             </div>
           </div>
         </draggable>
-        <br>
+        <br />
         <button @click="addItem">
           Add Search Engine
         </button>
       </fieldset>
       <div class="control">
-        <input
-          v-model="options.list.menu.enabled"
-          type="checkbox"
-        > Enable Commands
+        <input v-model="options.list.menu.enabled" type="checkbox" /> Enable
+        Commands
       </div>
       <fieldset v-if="options.list.menu.enabled">
         <legend>Commands</legend>
-        <p>Change the order of commands. <br>Go to web address command is only visible when selected address contains a valid url.</p>
+        <p>
+          Change the order of commands. <br />Go to web address command is only
+          visible when selected address contains a valid url.
+        </p>
         <draggable
           v-model="options.list.menu.items"
-          :options="{draggable:'.item'}"
+          :options="{ draggable: '.item' }"
           :handle="'.my-handle'"
         >
           <div
@@ -79,43 +79,43 @@
             track-by="$index"
             class="item"
           >
-            <div
-              class="my-handle"
-              title="Drag to Sort"
-            >
+            <div class="my-handle" title="Drag to Sort">
               ::::
             </div>
             {{ item.name }}
             <div class="group">
-              <input
-                v-model="item.enabled"
-                type="checkbox"
-              > Enabled
+              <input v-model="item.enabled" type="checkbox" /> Enabled
             </div>
           </div>
         </draggable>
       </fieldset>
       <div class="control">
-        <input
-          v-model="options.openTabInBackground"
-          type="checkbox"
-        > Open Tabs In Background
+        Auto hide popup after some time (0 to disable auto-hide):
+        <input v-model="options.popupTimeout" type="number" />
       </div>
       <div class="control">
-        <input
-          v-model="options.openTabNextToActive"
-          type="checkbox"
-        > Open new tab next to active tab
+        <input v-model="options.openTabInBackground" type="checkbox" /> Open
+        Tabs In Background
       </div>
       <div class="control">
-        <input
-          v-model="options.enableAdvanceSettings"
-          type="checkbox"
-        > Show Advance Settings
+        <input v-model="options.openTabNextToActive" type="checkbox" /> Open new
+        tab next to active tab
+      </div>
+      <div class="control">
+        <input v-model="options.disableForInputControls" type="checkbox" />
+        Disable for input controls
+      </div>
+      <div class="control">
+        <input v-model="options.enableAdvanceSettings" type="checkbox" /> Show
+        Advance Settings
       </div>
       <fieldset v-if="options.enableAdvanceSettings">
         <legend>Custom Style</legend>
-        <p>If you have some swagger and a little CSS knowledge under your belt, you can take your form’s looks to the next level using the Advanced settings for your custom theme</p>
+        <p>
+          If you have some swagger and a little CSS knowledge under your belt,
+          you can take your form’s looks to the next level using the Advanced
+          settings for your custom theme
+        </p>
         <textarea
           v-model="options.style"
           placeholder="Custom CSS Styles"
@@ -127,54 +127,54 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable';
+import draggable from 'vuedraggable'
 
 export default {
   components: {
     draggable,
   },
-  data () {
+  data() {
     return {
       options: null,
       timer: null,
-    };
+    }
   },
   watch: {
     options: {
-      handler () {
-        window.clearTimeout(this.timer);
-        this.timer = window.setTimeout(this.setOptions, 250);
+      handler() {
+        window.clearTimeout(this.timer)
+        this.timer = window.setTimeout(this.setOptions, 250)
         chrome.runtime.sendMessage({
           type: 'options',
           options: this.options,
-        });
+        })
       },
       deep: true,
     },
   },
-  created () {
-    this.getOptions();
+  created() {
+    this.getOptions()
   },
   methods: {
-    addItem () {
+    addItem() {
       this.options.list.searchEngines.items.push({
         name: '',
         url: '',
-      });
+      })
     },
-    removeItem (index) {
-      this.options.list.searchEngines.items.splice(index, 1);
+    removeItem(index) {
+      this.options.list.searchEngines.items.splice(index, 1)
     },
-    getOptions () {
+    getOptions() {
       chrome.storage.sync.get('options', key => {
-        this.options = key.options;
-      });
+        this.options = key.options
+      })
     },
-    setOptions () {
-      chrome.storage.sync.set({ options: this.options });
+    setOptions() {
+      chrome.storage.sync.set({ options: this.options })
     },
   },
-};
+}
 </script>
 
 <style scoped>

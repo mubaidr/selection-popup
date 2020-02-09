@@ -4,7 +4,7 @@ import './index.css'
 const className = '__selection-popup-container__'
 let selectionText = ''
 let options = null
-let popupTimeout = null
+let lastOpenPopupTimeout = null
 
 // check if popup should be displayed or skipped
 function isPopupRequired() {
@@ -20,6 +20,14 @@ function showPopup(position) {
   popup.style.left = position.left
   popup.style.top = position.top
   popup.style.display = 'block'
+
+  let timeout = parseInt(options.popupTimeout, 10)
+  // hide popup after some time
+  if (timeout && timeout > 0) {
+    window.setTimeout(() => {
+      hidePopup()
+    }, timeout)
+  }
 }
 
 // hide popup
@@ -34,12 +42,14 @@ function hidePopup() {
 function handleMouseUp(e) {
   hidePopup()
 
+  console.log(e)
+
   const { action } = e.target.dataset
   if (action) return
 
-  window.clearTimeout(popupTimeout)
+  window.clearTimeout(lastOpenPopupTimeout)
 
-  popupTimeout = window.setTimeout(() => {
+  lastOpenPopupTimeout = window.setTimeout(() => {
     selectionText = window
       .getSelection()
       .toString()
@@ -51,7 +61,7 @@ function handleMouseUp(e) {
         top: `${e.pageY + 14}px`,
       })
     }
-  }, 100)
+  }, 250)
 }
 
 // handle click on menu item

@@ -1,14 +1,13 @@
 const path = require('path')
 const webpack = require('webpack')
-const fg = require('fast-glob')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin
 const ChromeExtensionReloader = require('webpack-chrome-extension-reloader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const PurgecssPlugin = require('purgecss-webpack-plugin')
+const sass = require('sass')
 
 const isDevMode = process.env.NODE_ENV === 'development'
 
@@ -19,7 +18,7 @@ const config = {
     options: './options/index.js',
     popup: './popup/index.js',
     background: './background/index.js',
-    contentScripts: './contentScripts/index.js',
+    contentScript: './contentScripts/index.js',
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -45,7 +44,13 @@ const config = {
         use: [
           isDevMode ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
-          'sass-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              // Prefer `dart-sass`
+              implementation: sass,
+            },
+          },
         ],
       },
       {
@@ -53,7 +58,13 @@ const config = {
         use: [
           isDevMode ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
-          'sass-loader?indentedSyntax',
+          {
+            loader: 'sass-loader',
+            options: {
+              // Prefer `dart-sass`
+              implementation: sass,
+            },
+          },
         ],
       },
       {
@@ -85,11 +96,9 @@ const config = {
       vue$: 'vue/dist/vue.runtime.esm.js',
       bulma$: 'bulma/css/bulma.css',
     },
-    // extensions: ['.js'],
   },
   plugins: [
     new VueLoaderPlugin(),
-    new CleanWebpackPlugin(['./dist/', './dist-zip/']),
     new CopyWebpackPlugin([
       { from: 'assets', to: 'assets' },
       { from: 'manifest.json', to: 'manifest.json', flatten: true },
@@ -116,28 +125,22 @@ if (isDevMode) {
   config.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new ChromeExtensionReloader({
+      reloadPage: true,
       entries: {
         background: 'background',
-        options: 'options',
-        popup: 'popup',
-        contentScripts: 'contentScripts/index',
+        contentScript: ['contentScript', 'options', 'popup'],
       },
     })
   )
 } else {
   config.plugins.push(
+    new CleanWebpackPlugin(),
     new ScriptExtHtmlWebpackPlugin({
       async: [/runtime/],
       defaultAttribute: 'defer',
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
-    }),
-    new PurgecssPlugin({
-      paths: fg.sync([`./src/**/*`], {
-        onlyFiles: true,
-        absolute: true,
-      }),
     })
     // new CopyWebpackPlugin([
     //   {
