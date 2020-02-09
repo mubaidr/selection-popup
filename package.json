@@ -26,6 +26,7 @@
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
+    "cross-env": "^7.0.0",
     "css-loader": "^3.4.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
@@ -37,7 +38,6 @@
     "prettier": "^1.19.1",
     "sass": "^1.25.0",
     "sass-loader": "^8.0.2",
-    "script-ext-html-webpack-plugin": "^2.1.4",
     "style-loader": "^1.1.3",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
@@ -56,11 +56,11 @@
   },
   "scripts": {
     "build": "npm run pack && npm run remove-evals && npm run zip",
-    "dev": "webpack --mode=development --env.NODE_ENV=development --hide-modules --hot --watch",
+    "dev": "cross-env NODE_ENV=development webpack --mode development --hide-modules --hot --watch",
     "lint": "eslint --fix --ext .js,.vue,.json .",
-    "pack": "webpack --mode=production --env.NODE_ENV=production --hide-modules",
+    "pack": "cross-env NODE_ENV=production webpack --mode production --hide-modules",
     "remove-evals": "node scripts/remove-evals.js",
     "zip": "node scripts/build-zip.js"
   },
-  "version": "1.9.7"
+  "version": "1.9.8"
 }

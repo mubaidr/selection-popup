@@ -42,7 +42,17 @@ function hidePopup() {
 function handleMouseUp(e) {
   hidePopup()
 
-  console.log(e)
+  // disable on text input elements
+  if (options.disableForInputControls) {
+    let tagType = e.target.getAttribute('type')
+    if (
+      tagType &&
+      ['text', 'search', 'password'].includes(tagType.toLowerCase())
+    )
+      return
+
+    if (e.target.tagName.toLowerCase() === 'textarea') return
+  }
 
   const { action } = e.target.dataset
   if (action) return

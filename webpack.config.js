@@ -5,7 +5,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin
 const ChromeExtensionReloader = require('webpack-chrome-extension-reloader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const sass = require('sass')
 
@@ -101,7 +100,11 @@ const config = {
     new VueLoaderPlugin(),
     new CopyWebpackPlugin([
       { from: 'assets', to: 'assets' },
-      { from: 'manifest.json', to: 'manifest.json', flatten: true },
+      {
+        from: isDevMode ? 'manifest.dev.json' : 'manifest.json',
+        to: 'manifest.json',
+        flatten: true,
+      },
     ]),
     new HtmlWebpackPlugin({
       title: 'Options',
@@ -114,6 +117,9 @@ const config = {
       template: './index.html',
       filename: 'popup.html',
       chunks: ['popup'],
+    }),
+    new CleanWebpackPlugin({
+      cleanAfterEveryBuildPatterns: ['!assets/*', '!manifest.json'],
     }),
   ],
 }
@@ -134,20 +140,9 @@ if (isDevMode) {
   )
 } else {
   config.plugins.push(
-    new CleanWebpackPlugin(),
-    new ScriptExtHtmlWebpackPlugin({
-      async: [/runtime/],
-      defaultAttribute: 'defer',
-    }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
     })
-    // new CopyWebpackPlugin([
-    //   {
-    //     from: path.join(__dirname, '../src/data'),
-    //     to: path.join(__dirname, '../dist/data'),
-    //   },
-    // ])
   )
 }
 

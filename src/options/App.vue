@@ -6,13 +6,14 @@
         to apply new changes.
       </p>
       <div class="control">
-        <input v-model="options.list.searchEngines.enabled" type="checkbox" />
+        <input
+v-model="options.list.searchEngines.enabled" type="checkbox" />
         Enable Search Engines
       </div>
       <fieldset v-if="options.list.searchEngines.enabled">
         <legend>Search Engines</legend>
         <p>
-          Add search engines and change the order. <br />
+          Add search engines and change the order. <br >
           Use <strong>%s</strong> in the search url to represent
           <strong>selected text.</strong>
         </p>
@@ -27,7 +28,8 @@
             track-by="$index"
             class="item"
           >
-            <div class="my-handle" title="Drag to Sort">
+            <div class="my-handle"
+title="Drag to Sort">
               ::::
             </div>
             <input
@@ -53,25 +55,26 @@
             </div>
           </div>
         </draggable>
-        <br />
+        <br >
         <button @click="addItem">
           Add Search Engine
         </button>
       </fieldset>
       <div class="control">
-        <input v-model="options.list.menu.enabled" type="checkbox" /> Enable
+        <input
+v-model="options.list.menu.enabled" type="checkbox" /> Enable
         Commands
       </div>
       <fieldset v-if="options.list.menu.enabled">
         <legend>Commands</legend>
         <p>
-          Change the order of commands. <br />Go to web address command is only
+          Change the order of commands. <br >Go to web address command is only
           visible when selected address contains a valid url.
         </p>
         <draggable
           v-model="options.list.menu.items"
-          :options="{ draggable: '.item' }"
-          :handle="'.my-handle'"
+          v-bind="{ draggable: '.item' }"
+          handle=".my-handle"
         >
           <div
             v-for="(item, index) in options.list.menu.items"
@@ -79,34 +82,41 @@
             track-by="$index"
             class="item"
           >
-            <div class="my-handle" title="Drag to Sort">
+            <div class="my-handle"
+title="Drag to Sort">
               ::::
             </div>
             {{ item.name }}
             <div class="group">
-              <input v-model="item.enabled" type="checkbox" /> Enabled
+              <input
+v-model="item.enabled" type="checkbox" /> Enabled
             </div>
           </div>
         </draggable>
       </fieldset>
       <div class="control">
         Auto hide popup after some time (0 to disable auto-hide):
-        <input v-model="options.popupTimeout" type="number" />
+        <input
+v-model="options.popupTimeout" type="number" />
       </div>
       <div class="control">
-        <input v-model="options.openTabInBackground" type="checkbox" /> Open
+        <input
+v-model="options.openTabInBackground" type="checkbox" /> Open
         Tabs In Background
       </div>
       <div class="control">
-        <input v-model="options.openTabNextToActive" type="checkbox" /> Open new
+        <input
+v-model="options.openTabNextToActive" type="checkbox" /> Open new
         tab next to active tab
       </div>
       <div class="control">
-        <input v-model="options.disableForInputControls" type="checkbox" />
+        <input
+v-model="options.disableForInputControls" type="checkbox" />
         Disable for input controls
       </div>
       <div class="control">
-        <input v-model="options.enableAdvanceSettings" type="checkbox" /> Show
+        <input
+v-model="options.enableAdvanceSettings" type="checkbox" /> Show
         Advance Settings
       </div>
       <fieldset v-if="options.enableAdvanceSettings">
